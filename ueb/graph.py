@@ -14,7 +14,7 @@ class Graph:
         if isinstance(adjazenzlist, dict):
             self.adjazenz = adjazenzlist
 
-    def readInput(self, value=None, text="Insert graph input string :> "):
+    def read_input(self, value=None, text="Insert graph input string :> "):
         self.clear()
         raw_input = value or input(text)
         pattern = regex_compile("(\w+):(\w+|[\w,]*);")
@@ -137,7 +137,7 @@ class Graph:
                     # print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
                     v = self.getNeighbours(u)[0]
                     euler.append(v)
-                    # print("K {} index {}".format(K, K.index((u, v))))
+                    print("K {} index {}".format(K, K.index((u, v))))
                     K.remove((u, v))
                     self.removeEdge(u, v)
                     if u == z:
