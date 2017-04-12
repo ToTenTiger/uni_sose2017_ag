@@ -134,7 +134,7 @@ class Graph:
                         u = node
                         break
                 while True:
-                    # print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
+                    #print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
                     v = self.getNeighbours(u)[0]
                     euler.append(v)
                     edge = (u, v)
@@ -172,12 +172,13 @@ class Graph:
             assert isinstance(edges, list)
             edges.append(edge)
 
-    def removeEdge(self, node, edge):
-        edges = self.get_neighbours_plus(node)
-        if edge in edges:
+    def removeEdge(self, edge):
+        x, y = edge
+        edges = self.get_neighbours_plus(x)
+        if y in edges:
             edges.remove(edge)
 
     def removeNode(self, node_to_delete):
         if self.adjazenz.pop(node_to_delete, False):
             for node in self.adjazenz.keys():
-                self.removeEdge(node, node_to_delete)
+                self.removeEdge((node, node_to_delete))
