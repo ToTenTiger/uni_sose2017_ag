@@ -46,17 +46,17 @@ class Graph:
         # print("{} {}".format(node, self.adjazenz.get(str(node))))
         return deepcopy(self.adjazenz.get(str(node))) or []
 
-    def getNeighboursMinus(self, node):
+    def get_neighbours_minus(self, node):
         neighbours = []
         for (n, e) in self.adjazenz.items():
             if node in e:
                 neighbours.append(n)
         return neighbours
 
-    def getNeighbours(self, node):
-        return self.get_neighbours_plus(node) + self.getNeighboursMinus(node)
+    def get_neighbours(self, node):
+        return self.get_neighbours_plus(node) + self.get_neighbours_minus(node)
 
-    def getEdges(self):
+    def get_edges(self):
         K = []
         for node in self.adjazenz.keys():
             for edge in self.get_neighbours_plus(node):
@@ -78,18 +78,18 @@ class Graph:
     def bnb(self, x, y):
         return y in self.get_neighbours_plus(x) or x in self.get_neighbours_plus(y)
 
-    def ausGrad(self, x):
+    def aus_grad(self, x):
         return len(self.get_neighbours_plus(x))
 
-    def einGrad(self, x):
-        einGrad = 0
+    def ein_grad(self, x):
+        ein_grad = 0
         for (node, edges) in self.adjazenz.items():
             if x in edges:
-                einGrad += 1
-        return einGrad
+                ein_grad += 1
+        return ein_grad
 
     def grad(self, x):
-        return self.ausGrad(x) + self.einGrad(x)
+        return self.aus_grad(x) + self.ein_grad(x)
 
     def hierholzer(self):
         assert isinstance(self.dot, Dot)
@@ -126,7 +126,7 @@ class Graph:
         try:
             euler = [x]
             z = y
-            K = self.getEdges()
+            K = self.get_edges()
             while len(K) > 0:
                 u = None
                 for node in euler:
@@ -135,14 +135,14 @@ class Graph:
                         break
                 while True:
                     #print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
-                    v = self.getNeighbours(u)[0]
+                    v = self.get_neighbours(u)[0]
                     euler.append(v)
                     edge = (u, v)
                     if K.count(edge) <= 0:
                         edge = (v, u)
                     print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
                     K.remove(edge)
-                    self.removeEdge(edge)
+                    self.remove_edge(edge)
                     if u == z:
                         break
             return euler
@@ -152,7 +152,7 @@ class Graph:
     # ----------------------------------------------------------------
     # maybe not needed - after call a toGraph call is needed
 
-    def addNode(self, node, edges=None):
+    def add_node(self, node, edges=None):
         if not isinstance(edges, list):
             if edges is not None:
                 print("IllegalArgument: edges has to be a list")
@@ -163,7 +163,7 @@ class Graph:
             print("Node {} already exists: no changes made", node)
             return self.get_neighbours_plus(node)
 
-    def addEdge(self, node, edge):
+    def add_edge(self, node, edge):
         edges = self.get_neighbours_plus(node)
         if edges is None:
             print("Node not found")
@@ -171,7 +171,7 @@ class Graph:
             assert isinstance(edges, list)
             edges.append(edge)
 
-    def removeEdge(self, edge):
+    def remove_edge(self, edge):
         x, y = edge
         if y not in self.adjazenz[x] and x not in self.adjazenz[y]:
             print("Edge {} not exists".format(edge))
@@ -182,7 +182,7 @@ class Graph:
             y = tmp
         list(self.adjazenz[x]).remove(y)
 
-    def removeNode(self, node_to_delete):
+    def remove_node(self, node_to_delete):
         if self.adjazenz.pop(node_to_delete, False):
             for node in self.adjazenz.keys():
-                self.removeEdge((node, node_to_delete))
+                self.remove_edge((node, node_to_delete))
