@@ -23,7 +23,7 @@ class Graph:
             # list+filter contruct to ignor empty entries
             self.adjazenz[node] = list(filter(None, edge_list))
 
-    def toGraph(self, allow_multi=True):
+    def to_graph(self, allow_multi=True):
         self.dot = gv.Graph(
             name=self.title,
             directory="graphs",

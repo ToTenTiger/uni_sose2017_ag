@@ -6,7 +6,7 @@ class DiGraph(Graph):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
-    def toGraph(self, allow_multi=True):
+    def to_graph(self, allow_multi=True):
         self.dot = gv.Digraph(
             name=self.title,
             directory="graphs",
