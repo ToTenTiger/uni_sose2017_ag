@@ -85,7 +85,7 @@ class Graph:
         ein_grad = 0
         for (node, edges) in self.adjazenz.items():
             if x in edges:
-                ein_grad += 1
+                ein_grad += edges.count(x)
         return ein_grad
 
     def grad(self, x):
@@ -102,6 +102,7 @@ class Graph:
         for node in self.adjazenz.keys():
             grad = self.grad(node)
             d.append(grad)
+            print("n{} d{}".format(node, d))
             if grad % 2 == 1:
                 ung.append(node)
 
@@ -118,7 +119,8 @@ class Graph:
         else:
             print("Kein Euler-KaZu, > 2 oder 1 Ecke(n) mit ung. Grad")
             return u
-
+        print(u)
+        print(ziel)
         return self.kaZu(u, ziel)
 
     def kaZu(self, x, y):
