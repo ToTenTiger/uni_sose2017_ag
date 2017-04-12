@@ -134,12 +134,16 @@ class Graph:
                         u = node
                         break
                 while True:
-                    # print("node u {} and neigbhours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
+                    #print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
                     v = self.get_neighbours(u)[0]
                     euler.append(v)
-                    print("K {} index {}".format(K, K.index((u, v))))
-                    K.remove((u, v))
-                    self.remove_edge(u, v)
+                    edge = (u, v)
+                    if K.count(edge) <= 0:
+                        edge = (v, u)
+                    print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
+                    K.remove(edge)
+                    self.remove_edge(edge)
+
                     if u == z:
                         break
             return euler
@@ -168,12 +172,13 @@ class Graph:
             assert isinstance(edges, list)
             edges.append(edge)
 
-    def remove_edge(self, node, edge):
-        edges = self.get_neighbours_plus(node)
-        if edge in edges:
+    def remove_edge(self, edge):
+        x, y = edge
+        edges = self.get_neighbours_plus(x)
+        if y in edges:
             edges.remove(edge)
 
-    def remove_Node(self, node_to_delete):
+    def remove_node(self, node_to_delete):
         if self.adjazenz.pop(node_to_delete, False):
             for node in self.adjazenz.keys():
-                self.remove_edge(node, node_to_delete)
+                self.remove_edge((node, node_to_delete))
