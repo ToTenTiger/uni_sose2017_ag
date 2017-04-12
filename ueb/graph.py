@@ -180,7 +180,7 @@ class Graph:
             tmp = x
             x = y
             y = tmp
-        list(self.adjazenz[x]).remove(y)
+        self.adjazenz[x].remove(y)
 
     def remove_node(self, node_to_delete):
         if self.adjazenz.pop(node_to_delete, False):
