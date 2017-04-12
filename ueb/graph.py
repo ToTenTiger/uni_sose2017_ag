@@ -137,9 +137,13 @@ class Graph:
                     # print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
                     v = self.getNeighbours(u)[0]
                     euler.append(v)
-                    print("K {} index {}".format(K, K.index((u, v))))
-                    K.remove((u, v))
-                    self.removeEdge(u, v)
+                    edge = (u, v)
+                    if K.count(edge) <= 0:
+                        edge = (v, u)
+                    print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
+                    K.remove(edge)
+                    self.removeEdge(edge)
+
                     if u == z:
                         break
             return euler
