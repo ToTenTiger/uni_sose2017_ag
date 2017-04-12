@@ -134,7 +134,6 @@ class Graph:
                         u = node
                         break
                 while True:
-                    print("u {} z {}".format(u, z))
                     #print("un {}".format(self.get_neighbours(u)))
                     #print("node u {} and neighbours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
                     v = self.get_neighbours(u)[0]
@@ -145,11 +144,12 @@ class Graph:
                         u = v
                         v = tmp
                     #print("c {}: {}".format(edge, K.count(edge)))
-                    euler.append(v)
+                    euler.insert(euler.index(u)+1, v)
                     K.remove(edge)
                     self.remove_edge(edge)
+                    #print("u{} v{} z{}".format(u, v, z))
+                    #print(euler)
                     if u == z:
-                        #z = u  # TODO does makes this sense?
                         break
             return euler
         finally:
