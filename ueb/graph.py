@@ -134,7 +134,7 @@ class Graph:
                         u = node
                         break
                 while True:
-                    #print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
+                    print("node u {} and neighbours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
                     v = self.get_neighbours(u)[0]
                     euler.append(v)
                     edge = (u, v)
