@@ -134,12 +134,18 @@ class Graph:
                         u = node
                         break
                 while True:
-                    # print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
+                    #print("node u {} and neigbhours {} first entry v {}".format(u, self.getNeighbours(u), self.getNeighbours(u)[0]))
                     v = self.getNeighbours(u)[0]
                     euler.append(v)
-                    # print("K {} index {}".format(K, K.index((u, v))))
+                    #print("count of uv({}, {}): {} in K {} ".format(u, v, K.count((u, v)), K))
+                    if K.count((u, v)) <= 0:
+                        #print("count of vu({}, {}): {} in K {} ".format(v, u, K.count((v, u)), K))
+                        tmp = u
+                        u = v
+                        v = tmp
                     K.remove((u, v))
                     self.removeEdge(u, v)
+
                     if u == z:
                         break
             return euler
