@@ -20,6 +20,13 @@ class DiGraph(Graph):
         return self.dot
 
     # ----------------------------------------------------------------
+    # maybe not needed - after call a toGraph call is needed
+
+    def removeEdge(self, edge):
+        print("Not implemented yet")
+        exit(1)
+
+    # ----------------------------------------------------------------
     # not supported methods
 
     def hierholzer(self):

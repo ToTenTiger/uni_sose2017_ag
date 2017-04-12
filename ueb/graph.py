@@ -44,7 +44,7 @@ class Graph:
 
     def get_neighbours_plus(self, node):
         # print("{} {}".format(node, self.adjazenz.get(str(node))))
-        return self.adjazenz.get(str(node)) or []
+        return deepcopy(self.adjazenz.get(str(node))) or []
 
     def getNeighboursMinus(self, node):
         neighbours = []
@@ -143,7 +143,6 @@ class Graph:
                     print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
                     K.remove(edge)
                     self.removeEdge(edge)
-
                     if u == z:
                         break
             return euler
@@ -174,9 +173,14 @@ class Graph:
 
     def removeEdge(self, edge):
         x, y = edge
-        edges = self.get_neighbours_plus(x)
-        if y in edges:
-            edges.remove(edge)
+        if y not in self.adjazenz[x] and x not in self.adjazenz[y]:
+            print("Edge {} not exists".format(edge))
+            return
+        if y not in self.adjazenz[x]:
+            tmp = x
+            x = y
+            y = tmp
+        list(self.adjazenz[x]).remove(y)
 
     def removeNode(self, node_to_delete):
         if self.adjazenz.pop(node_to_delete, False):
