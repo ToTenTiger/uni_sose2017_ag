@@ -140,15 +140,12 @@ class Graph:
                     edge = (u, v)
                     if K.count(edge) <= 0:
                         edge = (v, u)
-                        tmp = u
-                        u = v
-                        v = tmp
                     #print("c {}: {}".format(edge, K.count(edge)))
-                    euler.insert(euler.index(u)+1, v)
+                    euler.insert(euler.index(edge[0])+1, edge[1])
                     K.remove(edge)
                     self.remove_edge(edge)
-                    #print("u{} v{} z{}".format(u, v, z))
-                    #print(euler)
+                    print("edge{} z{}".format(edge, z))
+                    print(euler)
                     if u == z:
                         break
             return euler
