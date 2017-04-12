@@ -109,10 +109,10 @@ class Graph:
             print("Kein Euler-KaZu, der Graph ist nicht zh")
             return False
 
-        u = None
-        ziel = next(iter(self.adjazenz.keys()))  # beliebige ecke -> derzeit erste TODO wofür?
+        u = next(iter(self.adjazenz.keys()))  # TODO beliebige ecke -> derzeit erste ; ok?
+        ziel = next(iter(self.get_neighbours(u)))  # TODO beliebige ecke -> derzeit nachbar von start ; ok ?
         if len(ung) == 0:
-            u = next(iter(self.adjazenz.keys()))  # TODO could be the same as ziel already
+            pass
         elif len(ung) == 2:
             u, ziel = ung
         else:
@@ -134,16 +134,22 @@ class Graph:
                         u = node
                         break
                 while True:
+                    print("u {} z {}".format(u, z))
+                    #print("un {}".format(self.get_neighbours(u)))
                     #print("node u {} and neighbours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
                     v = self.get_neighbours(u)[0]
-                    euler.append(v)
                     edge = (u, v)
                     if K.count(edge) <= 0:
                         edge = (v, u)
-                    #print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
+                        tmp = u
+                        u = v
+                        v = tmp
+                    #print("c {}: {}".format(edge, K.count(edge)))
+                    euler.append(v)
                     K.remove(edge)
                     self.remove_edge(edge)
                     if u == z:
+                        #z = u  # TODO does makes this sense?
                         break
             return euler
         finally:
