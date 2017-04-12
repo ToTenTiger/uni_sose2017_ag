@@ -42,7 +42,7 @@ class Graph:
     def clear(self):
         self.adjazenz.clear()
 
-    def getNeighboursPlus(self, node):
+    def get_neighbours_plus(self, node):
         # print("{} {}".format(node, self.adjazenz.get(str(node))))
         return self.adjazenz.get(str(node)) or []
 
@@ -54,12 +54,12 @@ class Graph:
         return neighbours
 
     def getNeighbours(self, node):
-        return self.getNeighboursPlus(node) + self.getNeighboursMinus(node)
+        return self.get_neighbours_plus(node) + self.getNeighboursMinus(node)
 
     def getEdges(self):
         K = []
         for node in self.adjazenz.keys():
-            for edge in self.getNeighboursPlus(node):
+            for edge in self.get_neighbours_plus(node):
                 K.append((node, edge))
         return K
 
@@ -76,10 +76,10 @@ class Graph:
     # excise methods
 
     def bnb(self, x, y):
-        return y in self.getNeighboursPlus(x) or x in self.getNeighboursPlus(y)
+        return y in self.get_neighbours_plus(x) or x in self.get_neighbours_plus(y)
 
     def ausGrad(self, x):
-        return len(self.getNeighboursPlus(x))
+        return len(self.get_neighbours_plus(x))
 
     def einGrad(self, x):
         einGrad = 0
@@ -158,10 +158,10 @@ class Graph:
             return self.adjazenz.get(node, edges)
         else:
             print("Node {} already exists: no changes made", node)
-            return self.getNeighboursPlus(node)
+            return self.get_neighbours_plus(node)
 
     def addEdge(self, node, edge):
-        edges = self.getNeighboursPlus(node)
+        edges = self.get_neighbours_plus(node)
         if edges is None:
             print("Node not found")
         else:
@@ -169,7 +169,7 @@ class Graph:
             edges.append(edge)
 
     def removeEdge(self, node, edge):
-        edges = self.getNeighboursPlus(node)
+        edges = self.get_neighbours_plus(node)
         if edge in edges:
             edges.remove(edge)
 

@@ -10,6 +10,6 @@ graph = Graph(title="test graph",
               adjazenzlist=adjazenz)
 print("bnb(C, A) ? %s" % graph.bnb("C", "A"))
 print("bnb(C, B) ? %s" % graph.bnb("C", "B"))
-dot = graph.toGraph(directional=True)
+dot = graph.to_graph(directional=True)
 print(dot.source)
 dot.render(view=0, cleanup=1)
