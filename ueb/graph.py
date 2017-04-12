@@ -144,8 +144,8 @@ class Graph:
                     euler.insert(euler.index(edge[0])+1, edge[1])
                     K.remove(edge)
                     self.remove_edge(edge)
-                    print("edge{} z{}".format(edge, z))
-                    print(euler)
+                    #print("edge{} z{}".format(edge, z))
+                    #print(euler)
                     if u == z:
                         break
             return euler
