@@ -1,4 +1,6 @@
 from ueb.graph import Graph
+import graphviz as gv
+
 
 class DiGraph(Graph):
     def __init__(self, *args, **kwargs):
