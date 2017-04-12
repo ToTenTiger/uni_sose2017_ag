@@ -102,7 +102,6 @@ class Graph:
         for node in self.adjazenz.keys():
             grad = self.grad(node)
             d.append(grad)
-            print("n{} d{}".format(node, d))
             if grad % 2 == 1:
                 ung.append(node)
 
@@ -119,8 +118,7 @@ class Graph:
         else:
             print("Kein Euler-KaZu, > 2 oder 1 Ecke(n) mit ung. Grad")
             return u
-        print(u)
-        print(ziel)
+
         return self.kaZu(u, ziel)
 
     def kaZu(self, x, y):
@@ -136,13 +134,13 @@ class Graph:
                         u = node
                         break
                 while True:
-                    print("node u {} and neighbours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
+                    #print("node u {} and neighbours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
                     v = self.get_neighbours(u)[0]
                     euler.append(v)
                     edge = (u, v)
                     if K.count(edge) <= 0:
                         edge = (v, u)
-                    print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
+                    #print("count of {}: {} in K {} ".format(edge, K.count(edge), K))
                     K.remove(edge)
                     self.remove_edge(edge)
                     if u == z:
