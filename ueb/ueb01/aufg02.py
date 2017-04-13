@@ -16,7 +16,7 @@ graph.read_input(value="0:2,3,5,7;" +
                        "9:2,6,7,10;" +
                        "10:3,5,7,9;;")
 
-dot = graph.to_graph()
+dot = graph.to_dot()
 #print(dot.source)
 dot.render(view=1, cleanup=1)
 print("Hierholzer Output: {}".format(graph.hierholzer()))

@@ -1,21 +1,22 @@
-from ueb.edge import Edge
-import graphviz as gv
-from re import compile as regex_compile
-from graphviz.dot import Dot
-from copy import deepcopy
-from typing import List
+from ueb import *
 
 
 class Graph:
-    def __init__(self, title=None, filename: str="graph", adjazenzlist: dict=None, allow_multi=True, weighted=False):
+    def __init__(self,
+                 title=None,
+                 filename: str="graph",
+                 adjazenzlist: dict=None,
+                 allow_multi=True,
+                 weighted=False):
         self.dot = Dot()
-        self.allow_multi = allow_multi
-        self.weighted = weighted
+
         self.title = title
         self.filename = filename if filename.endswith(".gv") else filename + ".gv"
         self.adjazenz = dict()
         if isinstance(adjazenzlist, dict):
             self.adjazenz = adjazenzlist
+        self.allow_multi = allow_multi
+        self.weighted = weighted
 
     def read_input(self, value=None, text="Insert graph input string :> "):
         self.clear()
@@ -38,7 +39,7 @@ class Graph:
                     e = Edge(edge, weight)
                     self.add_edge(node, e)
 
-    def to_graph(self):
+    def to_dot(self):
         self.dot = gv.Graph(
             name=self.title,
             directory="graphs",
@@ -48,7 +49,7 @@ class Graph:
             node_attr={},
             edge_attr={}
         )
-        self.__buildDot()
+        self._buildDot()
         return self.dot
 
     # ----------------------------------------------------------------
@@ -79,13 +80,14 @@ class Graph:
         return K
 
     # ----------------------------------------------------------------
-    # 'private' methods
+    # 'protected' methods
 
-    def __buildDot(self):
+    def _buildDot(self):
         for node, edges in self.adjazenz.items():
             self.dot.node(node)
             for edge in edges:
-                self.dot.edge(node, edge.node, edge.weight)
+                label = str(edge.weight) if self.weighted else None
+                self.dot.edge(node, edge.node, label)
 
     # ----------------------------------------------------------------
     # excise methods

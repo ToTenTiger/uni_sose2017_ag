@@ -24,6 +24,6 @@ print("einGrad(7) ? %s" % graph.ein_grad("7"))
 print("einGrad(2) ? %s" % graph.ein_grad("2"))
 print("grad(10) ? %s" % graph.grad("10"))
 
-dot = graph.to_graph()
+dot = graph.to_dot()
 #print(dot.source)
 dot.render(view=1, cleanup=1)
