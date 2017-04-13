@@ -32,3 +32,12 @@ class DiGraph(Graph):
     def hierholzer(self):
         print("Method hierholzer not supported for directed graphs")
         return
+
+    # ----------------------------------------------------------------
+    # supported methods
+
+    def __eq__(self, other):
+        return NotImplemented
+
+    def __ne__(self, other):
+        return NotImplemented

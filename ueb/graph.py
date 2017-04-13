@@ -1,14 +1,17 @@
+from ueb.edge import Edge
 import graphviz as gv
 from re import compile as regex_compile
 from graphviz.dot import Dot
 from copy import deepcopy
+from typing import List
 
 
 class Graph:
-    def __init__(self, title=None, filename=None, adjazenzlist=None):
-        self.dot = None
+    def __init__(self, title=None, filename: str="graph", adjazenzlist: dict=None, allow_multi=True, weighted=False):
+        self.dot = Dot()
+        self.allow_multi = allow_multi
+        self.weighted = weighted
         self.title = title
-        assert isinstance(filename, str)
         self.filename = filename if filename.endswith(".gv") else filename + ".gv"
         self.adjazenz = dict()
         if isinstance(adjazenzlist, dict):
@@ -17,18 +20,30 @@ class Graph:
     def read_input(self, value=None, text="Insert graph input string :> "):
         self.clear()
         raw_input = value or input(text)
-        pattern = regex_compile("(\w+):(\w+|[\w,]*);")
-        for (node, edges) in pattern.findall(raw_input):
-            edge_list = str(edges).split(",")
-            # list+filter contruct to ignor empty entries
-            self.adjazenz[node] = list(filter(None, edge_list))
 
-    def to_graph(self, allow_multi=True):
+        if not self.weighted:
+            pattern = regex_compile("(\w+):(\w+|[\w,]*);")
+            for (node, edges) in pattern.findall(raw_input):
+                edge_list = str(edges).split(",")
+                self.add_node(node, [])
+                self.add_edges(node, [Edge(e) for e in edge_list])  # converts list<str> on the fly to list<Edge>
+                # list+filter contruct to ignor empty entries
+                #self.add_edges(node, list(filter(None, edge_list))
+        else:
+            pattern_nodes = regex_compile("(\w+):(|(?:\w+-\d+(?:\.\d+)?)(?:,\w+-\d+(?:\.\d+)?)*);")
+            pattern_edges = regex_compile("(\d+)-(\d+(?:\.\d+)?)")
+            for (node, edges) in pattern_nodes.findall(raw_input):
+                self.add_node(node, [])
+                for (edge, weight) in pattern_edges.findall(edges):
+                    e = Edge(edge, weight)
+                    self.add_edge(node, e)
+
+    def to_graph(self):
         self.dot = gv.Graph(
             name=self.title,
             directory="graphs",
             filename=self.filename,
-            strict=not allow_multi,
+            strict=not self.allow_multi,
             graph_attr={},
             node_attr={},
             edge_attr={}
@@ -70,7 +85,7 @@ class Graph:
         for node, edges in self.adjazenz.items():
             self.dot.node(node)
             for edge in edges:
-                self.dot.edge(node, edge)
+                self.dot.edge(node, edge.node, edge.weight)
 
     # ----------------------------------------------------------------
     # excise methods
@@ -92,7 +107,6 @@ class Graph:
         return self.aus_grad(x) + self.ein_grad(x)
 
     def hierholzer(self):
-        assert isinstance(self.dot, Dot)
         if self.dot.strict:
             print("Method hierholzer not supported for graphs without cycles")
             return
@@ -143,7 +157,7 @@ class Graph:
                     #print("c {}: {}".format(edge, K.count(edge)))
                     euler.insert(euler.index(edge[0])+1, edge[1])
                     K.remove(edge)
-                    self.remove_edge(edge)
+                    self.remove_edge(edge[0], edge[1])
                     #print("edge{} z{}".format(edge, z))
                     #print(euler)
                     if u == z:
@@ -157,27 +171,35 @@ class Graph:
 
     def add_node(self, node, edges=None):
         if not isinstance(edges, list):
-            if edges is not None:
-                print("IllegalArgument: edges has to be a list")
+            print("IllegalArgument: edges has to be a list")
             edges = []
         if node not in self.adjazenz.keys():
-            return self.adjazenz.get(node, edges)
+            self.adjazenz[node] = edges
+            return self.adjazenz[node]
         else:
             print("Node {} already exists: no changes made", node)
             return self.get_neighbours_plus(node)
 
-    def add_edge(self, node, edge):
-        edges = self.get_neighbours_plus(node)
+    def add_edge(self, node, edge: Edge):
+        edges = self.adjazenz[str(node)]
         if edges is None:
             print("Node not found")
         else:
             assert isinstance(edges, list)
+            if not self.allow_multi:
+                if edge in edges:
+                    print("Multi edges not allowed")
+                    return
             edges.append(edge)
 
-    def remove_edge(self, edge):
-        x, y = edge
+    def add_edges(self, node, edges: List[Edge]):
+        for edge in edges:
+            self.add_edge(node, edge)
+
+    def remove_edge(self, node, edge):
+        x, y = node, edge
         if y not in self.adjazenz[x] and x not in self.adjazenz[y]:
-            print("Edge {} not exists".format(edge))
+            print("Edge {} in both directions not exists".format((x, y)))
             return
         if y not in self.adjazenz[x]:
             tmp = x
@@ -185,7 +207,7 @@ class Graph:
             y = tmp
         self.adjazenz[x].remove(y)
 
-    def remove_node(self, node_to_delete):
-        if self.adjazenz.pop(node_to_delete, False):
-            for node in self.adjazenz.keys():
-                self.remove_edge((node, node_to_delete))
+    def remove_node(self, node):
+        if self.adjazenz.pop(node, False):
+            for n in self.adjazenz.keys():
+                self.remove_edge(n, node)

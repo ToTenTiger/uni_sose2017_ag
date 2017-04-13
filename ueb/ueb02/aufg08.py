@@ -1,7 +1,9 @@
 from ueb.graph import Graph
 
 graph = Graph(title="Excise 08 graph 01",
-              filename="08-01")
+              filename="08-01",
+              allow_multi=False,
+              weighted=True)
 graph.read_input(value="0:2-2,3-4.5,5-4,7-4.5;" +
                        "1:3-2.5,4-2,5-2,6-2.5;" +
                        "2:0-2.5,6-2,7-2,9-3;" +
