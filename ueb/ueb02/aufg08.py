@@ -1,4 +1,5 @@
-from ueb.graph import Graph
+from classes import Graph
+
 
 graph = Graph(title="Excise 08 graph 01",
               filename="08-01",
@@ -17,5 +18,5 @@ graph.read_input(value="0:2-2,3-4.5,5-4,7-4.5;" +
                        "10:3-4,5-3.5,7-4.5,9-3;;")
 
 dot = graph.to_dot()
-# print(dot.source)
+print("\nYour graph G in dot format:\n{}\n".format(dot.source))
 dot.render(view=1, cleanup=1)

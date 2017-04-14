@@ -1,5 +1,4 @@
-from ueb import *
-
+from classes import *
 
 class Graph:
     def __init__(self,
@@ -20,16 +19,23 @@ class Graph:
 
     def read_input(self, value=None, text="Insert graph input string :> "):
         self.clear()
-        raw_input = value or input(text)
+        raw_input = value
+        if not value:
+            raw_input = input(text)
+        else:
+            print("\nUsing passed adjazenz list: {}\n".format(value))
+            new_input = input("Enter any other list to use or press [Enter] to continue: ")
+            if new_input:
+                raw_input = new_input
 
         if not self.weighted:
             pattern = regex_compile("(\w+):(\w+|[\w,]*);")
             for (node, edges) in pattern.findall(raw_input):
                 edge_list = str(edges).split(",")
                 self.add_node(node, [])
-                self.add_edges(node, [Edge(e) for e in edge_list])  # converts list<str> on the fly to list<Edge>
+                # converts list<str> on the fly to list<Edge>
                 # list+filter contruct to ignor empty entries
-                #self.add_edges(node, list(filter(None, edge_list))
+                self.add_edges(node, [Edge(e) for e in  list(filter(None, edge_list))])
         else:
             pattern_nodes = regex_compile("(\w+):(|(?:\w+-\d+(?:\.\d+)?)(?:,\w+-\d+(?:\.\d+)?)*);")
             pattern_edges = regex_compile("(\d+)-(\d+(?:\.\d+)?)")

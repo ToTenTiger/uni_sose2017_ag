@@ -1,11 +1,10 @@
-from ueb import *
-
+from classes import *
 
 class DiGraph(Graph):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
-    def to_dot(self, allow_multi=True):
+    def to_dot(self):
         self.dot = gv.Digraph(
             name=self.title,
             directory="graphs",
@@ -33,7 +32,7 @@ class DiGraph(Graph):
         return
 
     # ----------------------------------------------------------------
-    # supported methods
+    # unsupported methods
 
     def __eq__(self, other):
         return NotImplemented

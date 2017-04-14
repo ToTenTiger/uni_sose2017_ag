@@ -1,4 +1,4 @@
-from ueb.graph import Graph
+from classes import Graph
 
 
 graph = Graph(title="Excise 01 graph 02",
@@ -17,6 +17,7 @@ graph.read_input(value="0:2,3,5,7;" +
                        "10:3,5,7,9;;")
 
 dot = graph.to_dot()
-#print(dot.source)
+print("\nYour graph G in dot format:\n{}\n".format(dot.source))
 dot.render(view=1, cleanup=1)
+
 print("Hierholzer Output: {}".format(graph.hierholzer()))

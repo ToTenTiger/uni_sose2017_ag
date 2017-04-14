@@ -1,4 +1,4 @@
-from ueb import *
+from classes import *
 
 
 graph = DiGraph(title="test graph",
