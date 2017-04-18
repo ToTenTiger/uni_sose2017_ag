@@ -170,6 +170,8 @@ class Graph:
 
                 if u == z:
                     break
+
+            #append sub list to list at a specific point
             for i, sub_node in enumerate(sub_euler):
                 euler.insert(euler.index(u) + 1 + i, sub_node)
         return euler
