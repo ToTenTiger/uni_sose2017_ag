@@ -18,4 +18,16 @@ class Edge:
 
     def __hash__(self):
         # remove function if class have mutable objects
-        return hash(tuple(sorted(self.__dict__.items())))
+        return hash(self.node)
+
+    def __str__(self):
+        #return "Edge[{}]".format(str(self.node))
+        return str(self.node)
+
+    def __repr__(self):
+        #return "Edge[{}]".format(str(self.node))
+        return str(self.node)
+
+    def __unicode__(self):
+        #return u"Edge[{}]".format(str(self.node))
+        return u""+str(self.node)

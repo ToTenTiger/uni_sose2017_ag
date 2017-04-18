@@ -35,7 +35,7 @@ class Graph:
                 self.add_node(node, [])
                 # converts list<str> on the fly to list<Edge>
                 # list+filter contruct to ignor empty entries
-                self.add_edges(node, [Edge(e) for e in  list(filter(None, edge_list))])
+                self.add_edges(node, [Edge(e) for e in list(filter(None, edge_list))])
         else:
             pattern_nodes = regex_compile("(\w+):(|(?:\w+-\d+(?:\.\d+)?)(?:,\w+-\d+(?:\.\d+)?)*);")
             pattern_edges = regex_compile("(\d+)-(\d+(?:\.\d+)?)")
@@ -65,14 +65,14 @@ class Graph:
         self.adjazenz.clear()
 
     def get_neighbours_plus(self, node):
-        # print("{} {}".format(node, self.adjazenz.get(str(node))))
         return deepcopy(self.adjazenz.get(str(node))) or []
 
     def get_neighbours_minus(self, node):
         neighbours = []
-        for (n, e) in self.adjazenz.items():
-            if node in e:
-                neighbours.append(n)
+        for n, es in self.adjazenz.items():
+            for e in es:
+                if e == str(node):
+                    neighbours.append(Edge(n, e.weight))
         return neighbours
 
     def get_neighbours(self, node):
@@ -83,7 +83,7 @@ class Graph:
         for node in self.adjazenz.keys():
             for edge in self.get_neighbours_plus(node):
                 K.append((node, edge))
-        return K
+        return deepcopy(K)
 
     # ----------------------------------------------------------------
     # 'protected' methods
@@ -105,11 +105,7 @@ class Graph:
         return len(self.get_neighbours_plus(x))
 
     def ein_grad(self, x):
-        ein_grad = 0
-        for (node, edges) in self.adjazenz.items():
-            if x in edges:
-                ein_grad += edges.count(x)
-        return ein_grad
+        return len(self.get_neighbours_minus(x))
 
     def grad(self, x):
         return self.aus_grad(x) + self.ein_grad(x)
@@ -130,49 +126,53 @@ class Graph:
         if 0 in d:
             print("Kein Euler-KaZu, der Graph ist nicht zh")
             return False
-
-        u = next(iter(self.adjazenz.keys()))  # TODO beliebige ecke -> derzeit erste ; ok?
-        ziel = next(iter(self.get_neighbours(u)))  # TODO beliebige ecke -> derzeit nachbar von start ; ok ?
-        if len(ung) == 0:
-            pass
-        elif len(ung) == 2:
-            u, ziel = ung
-        else:
+        if len(ung) > 2 or len(ung) == 1:
             print("Kein Euler-KaZu, > 2 oder 1 Ecke(n) mit ung. Grad")
-            return u
+            return False
+
+        u = next(iter(self.adjazenz.keys()))
+        ziel = u
+        if len(ung) == 2:
+            u, ziel = ung
 
         return self.kaZu(u, ziel)
 
     def kaZu(self, x, y):
-        old_adjazenz = deepcopy(self.adjazenz)
-        try:
-            euler = [x]
-            z = y
-            K = self.get_edges()
-            while len(K) > 0:
-                u = None
-                for node in euler:
-                    if self.grad(node) > 0:
-                        u = node
-                        break
-                while True:
-                    #print("un {}".format(self.get_neighbours(u)))
-                    #print("node u {} and neighbours {} first entry v {}".format(u, self.get_neighbours(u), self.get_neighbours(u)[0]))
-                    v = self.get_neighbours(u)[0]
-                    edge = (u, v)
-                    if K.count(edge) <= 0:
-                        edge = (v, u)
-                    #print("c {}: {}".format(edge, K.count(edge)))
-                    euler.insert(euler.index(edge[0])+1, edge[1])
-                    K.remove(edge)
-                    self.remove_edge(edge[0], edge[1])
-                    #print("edge{} z{}".format(edge, z))
-                    #print(euler)
-                    if u == z:
-                        break
-            return euler
-        finally:
-            self.adjazenz = old_adjazenz
+        graph = deepcopy(self)
+        euler = [x]
+        z = y
+        graph_edges = graph.get_edges()
+
+        while len(graph_edges) > 0:
+            u = None
+            for node in euler:
+                if graph.grad(node) > 0:
+                    u = node
+                    z = u
+                    break
+            if not u:
+                exit("DAAAAANGER or not??????")
+
+            #print("Target-{}".format(z)) # debug
+            sub_euler = []
+            while True:
+                #print("Current-{} Neighbours-{}".format(u, graph.get_neighbours(u))) # debug
+                v = graph.get_neighbours(u)[0]
+                edge = (u, v)
+                if graph_edges.count(edge) <= 0:
+                    edge = (v, u)
+
+                #print("e({}, {})".format(edge[0], edge[1])) # debug
+                sub_euler.append(v)
+                graph_edges.remove(edge)
+                graph.remove_edge(edge[0], edge[1])
+                u = v
+
+                if u == z:
+                    break
+            for i, sub_node in enumerate(sub_euler):
+                euler.insert(euler.index(u) + 1 + i, sub_node)
+        return euler
 
     # ----------------------------------------------------------------
     # maybe not needed - after call a toGraph call is needed
@@ -206,6 +206,7 @@ class Graph:
 
     def remove_edge(self, node, edge):
         x, y = node, edge
+        #print("({}, {})".format(x, y)) # debug
         if y not in self.adjazenz[x] and x not in self.adjazenz[y]:
             print("Edge {} in both directions not exists".format((x, y)))
             return
