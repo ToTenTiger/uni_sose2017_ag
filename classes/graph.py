@@ -13,7 +13,7 @@ class Graph:
                  title=None,
                  filename: str="graph",
                  adjazenzlist: dict=None,
-                 allow_multi=True,
+                 allow_multi=False,
                  weighted=False):
         self.dot = Dot()
 

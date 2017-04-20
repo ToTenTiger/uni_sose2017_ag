@@ -3,10 +3,9 @@ from tasks import *
 print("Start: Excise 02 Task 08")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-graph = Graph(title="Excise 02 Task 08 Graph 01",
-              filename="e02_t08_g01",
-              allow_multi=False,
-              weighted=True)
+graph = DiGraph(title="Excise 02 Task 08 Graph 01",
+                filename="e02_t08_g01",
+                weighted=True)
 graph.read_input(value="0:2-2,3-4.5,5-4,7-4.5;" +
                        "1:3-2.5,4-2,5-2,6-2.5;" +
                        "2:0-2.5,6-2,7-2,9-3;" +
