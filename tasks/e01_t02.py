@@ -1,9 +1,11 @@
-from classes import Graph
+from tasks import *
 
+print("Start: Excise 01 Task 02")
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-graph = Graph(title="Excise 01 graph 02",
-              filename="01-02",
-              allow_multi=True)
+graph = DiGraph(title="Excise 01 Task 02 Graph 01",
+                filename="e01_t02_g01",
+                allow_multi=True)
 graph.read_input(value="0:2,3,5,7;" +
                        "1:3,4,5,6;" +
                        "2:0,6,7,9;" +
@@ -16,8 +18,9 @@ graph.read_input(value="0:2,3,5,7;" +
                        "9:2,6,7,10;" +
                        "10:3,5,7,9;;")
 
-dot = graph.to_dot()
-print("\nYour graph G in dot format:\n{}\n".format(dot.source))
-dot.render(view=1, cleanup=1)
+dot = create_print_render_dot(graph)
 
-print("Hierholzer Output: {}".format(graph.hierholzer()))
+print("Hierholzer-Folge: {}".format(graph.hierholzer()))
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print("End: Excise 01 Task 02")

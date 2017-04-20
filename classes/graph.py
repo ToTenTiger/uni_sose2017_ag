@@ -1,4 +1,12 @@
-from classes import *
+from copy import deepcopy
+from re import compile as regex_compile
+from typing import List
+
+import graphviz as gv
+from graphviz.dot import Dot
+
+from .edge import Edge
+
 
 class Graph:
     def __init__(self,
@@ -85,6 +93,16 @@ class Graph:
                 K.append((node, edge))
         return deepcopy(K)
 
+    def kaZu_grad(self, node):
+        return self.grad(node)
+
+    def kaZu_next_edge(self, u, edges):
+        v = self.get_neighbours(u)[0]
+        edge = (u, v)
+        if edges.count(edge) <= 0:
+            edge = (v, u)
+        return v, edge
+
     # ----------------------------------------------------------------
     # 'protected' methods
 
@@ -146,7 +164,7 @@ class Graph:
         while len(graph_edges) > 0:
             u = None
             for node in euler:
-                if graph.grad(node) > 0:
+                if graph.kaZu_grad(node) > 0:
                     u = node
                     z = u
                     break
@@ -157,10 +175,7 @@ class Graph:
             sub_euler = []
             while True:
                 #print("Current-{} Neighbours-{}".format(u, graph.get_neighbours(u))) # debug
-                v = graph.get_neighbours(u)[0]
-                edge = (u, v)
-                if graph_edges.count(edge) <= 0:
-                    edge = (v, u)
+                v, edge = graph.kaZu_next_edge(u, graph_edges)
 
                 #print("e({}, {})".format(edge[0], edge[1])) # debug
                 sub_euler.append(v)

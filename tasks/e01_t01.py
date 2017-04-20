@@ -1,8 +1,11 @@
-from classes import DiGraph
+from tasks import *
 
 
-graph = DiGraph(title="Excise 01 graph 01",
-                filename="01-01")
+print("Start: Excise 01 Task 01")
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+graph = DiGraph(title="Excise 01 Task 01 Graph 01",
+                filename="e01_t01_g01",)
 graph.read_input(value="1:2,3,5,10;" +
                        "2:3,4,7,8;" +
                        "3:5;" +
@@ -15,9 +18,7 @@ graph.read_input(value="1:2,3,5,10;" +
                        "10:11;" +
                        "11:;;")
 
-dot = graph.to_dot()
-print("\nYour graph G in dot format:\n{}\n".format(dot.source))
-dot.render(view=1, cleanup=1)
+dot = create_print_render_dot(graph)
 
 print("bnb(2,4) ? %s" % graph.bnb("2", "4"))
 print("bnb(4,2) ? %s" % graph.bnb("4", "2"))
@@ -27,3 +28,6 @@ print("ausGrad(8) ? %s" % graph.aus_grad("8"))
 print("einGrad(7) ? %s" % graph.ein_grad("7"))
 print("einGrad(2) ? %s" % graph.ein_grad("2"))
 print("grad(10) ? %s" % graph.grad("10"))
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+print("End: Excise 01 Task 01")

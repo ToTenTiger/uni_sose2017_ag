@@ -1,4 +1,7 @@
-from classes import *
+import graphviz as gv
+
+from .graph import Graph
+
 
 class DiGraph(Graph):
     def __init__(self, *args, **kwargs):
@@ -18,18 +21,27 @@ class DiGraph(Graph):
         return self.dot
 
     # ----------------------------------------------------------------
+    # helper methods
+
+    def kaZu_grad(self, node):
+        return self.ein_grad(node)
+
+    def kaZu_next_edge(self, u, edges):
+        v = self.get_neighbours_plus(u)[0]
+        edge = (u, v)
+        if edges.count(edge) <= 0:
+            edge = (v, u)
+        return v, edge
+
+    # ----------------------------------------------------------------
     # maybe not needed - after call a toGraph call is needed
 
     def remove_edge(self, node, edge):
-        print("Not implemented yet")
-        exit(1)
-
-    # ----------------------------------------------------------------
-    # not supported methods
-
-    def hierholzer(self):
-        print("Method hierholzer not supported for directed graphs")
-        return
+        x, y = node, edge
+        if y not in self.adjazenz[x] :
+            print("Edge {} not exists".format((x, y)))
+            return
+        self.adjazenz[x].remove(y)
 
     # ----------------------------------------------------------------
     # unsupported methods
