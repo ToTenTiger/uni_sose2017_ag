@@ -5,3 +5,6 @@ class Tree:
 
     def add_tree(self, tree):
         pass
+
+    def is_valide(self):
+        return self.root.is_valide
