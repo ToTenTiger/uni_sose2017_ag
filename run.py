@@ -38,21 +38,20 @@ elif args.output == 3:
 
 
 if not args.task and not args.execise:
-    pass
+    import tasks.e03_t10
 else:
     if args.task:
         if args.task == 1:
-            pass
+            import tasks.e01_t01
         elif args.task == 2:
-            pass
+            import tasks.e01_t02
         elif args.task == 8:
-            pass
-        elif args.task == 10:
-            pass
+            import tasks.e02_t08
     elif args.execise:
         if args.execise == 1:
-            pass
+            import tasks.e01_t01
+            import tasks.e01_t02
         elif args.execise == 2:
-            pass
+            import tasks.e02_t08
         elif args.execise == 3:
-            pass
+            import tasks.e03_t10
