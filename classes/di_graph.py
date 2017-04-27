@@ -23,6 +23,13 @@ class DiGraph(Graph):
     # ----------------------------------------------------------------
     # helper methods
 
+    def find_msb(self):
+        # TODO implement me
+        exit("Not implemented yet")
+
+    # ----------------------------------------------------------------
+    # helper methods
+
     def kaZu_grad(self, node):
         return self.ein_grad(node)
 
