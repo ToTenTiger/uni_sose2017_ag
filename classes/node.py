@@ -50,5 +50,8 @@ class Node:
     def __lt__(self, other):
         return self.weight < other.weight
 
+    def __gt__(self, other):
+        return self.weight > other.weight
+
     def __eq__(self, other):
         return self.weight == other.weight
