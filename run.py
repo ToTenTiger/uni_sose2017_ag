@@ -1,4 +1,5 @@
 import argparse
+
 import global_vars
 
 parser = argparse.ArgumentParser(description="Execute some pre-defined graph operations",
@@ -12,12 +13,12 @@ parser.add_argument("-o", "-output", dest="output",
 group_run = parser.add_mutually_exclusive_group()
 group_run.add_argument("-t", "-task", dest="task",
                        type=int,
-                       choices=[1, 2, 8],
+                       choices=[1, 2, 8, 10],
                        help="Choose the task to run (-e will be ignored)")
 
 group_run.add_argument("-e", "-execise", dest="execise",
                        type=int,
-                       choices=[1, 2],
+                       choices=[1, 2, 3],
                        help="Choose the execise to run completly")
 
 parser.add_argument("-c", "-clean", dest="clean", action="store_true",
@@ -37,18 +38,21 @@ elif args.output == 3:
 
 
 if not args.task and not args.execise:
-    import tasks.e02_t08
+    pass
 else:
     if args.task:
         if args.task == 1:
-            import tasks.e01_t01
+            pass
         elif args.task == 2:
-            import tasks.e01_t02
+            pass
         elif args.task == 8:
-            import tasks.e02_t08
+            pass
+        elif args.task == 10:
+            pass
     elif args.execise:
         if args.execise == 1:
-            import tasks.e01_t01
-            import tasks.e01_t02
+            pass
         elif args.execise == 2:
-            import tasks.e02_t08
+            pass
+        elif args.execise == 3:
+            pass
