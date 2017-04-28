@@ -38,7 +38,8 @@ elif args.output == 3:
 
 
 if not args.task and not args.execise:
-    import tasks.e03_t10
+    import tasks.e04_t16
+    import tasks.e04_t17
 else:
     if args.task:
         if args.task == 1:
