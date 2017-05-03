@@ -3,8 +3,6 @@
 
 # generated graph files
 graphs/
-*.gv
-*.gv.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
