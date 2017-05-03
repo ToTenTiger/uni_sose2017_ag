@@ -12,6 +12,7 @@ class Graph:
     def __init__(self,
                  title=None,
                  filename: str="graph",
+                 body=None,
                  adjazenzlist: dict=None,
                  allow_multi=False,
                  weighted=False):
@@ -19,6 +20,7 @@ class Graph:
 
         self.title = title
         self.filename = filename if filename.endswith(".gv") else filename + ".gv"
+        self.body = body
         self.adjazenz = dict()
         if isinstance(adjazenzlist, dict):
             self.adjazenz = adjazenzlist
@@ -61,9 +63,12 @@ class Graph:
             strict=not self.allow_multi,
             graph_attr={},
             node_attr={},
-            edge_attr={}
+            edge_attr={},
+            body=self.body
         )
-        self._buildDot()
+
+        if not self.body:
+            self._buildDot()
         return self.dot
 
     # ----------------------------------------------------------------

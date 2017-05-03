@@ -14,4 +14,8 @@ def create_print_render_dot(graph):
 
     return dot
 
+
+def read_dot_body(filepath):
+    return open(filepath).readlines()[1:-1]
+
 __all__ = ["Edge", "DiGraph", "Graph", "create_print_render_dot"]
