@@ -2,10 +2,10 @@ import global_vars
 from classes import *
 
 
-def create_print_render_dot(graph: Graph):
+def create_print_render_dot(graph):
     dot = graph.to_dot()
 
-    if global_vars.print:
+    if global_vars.printout:
         #answer = input("Options:Should I print the dot-file? [y/n]")
         #if not answer or answer == "y":
         print("\nYour graph G in dot format:\n{}\n".format(dot.source))

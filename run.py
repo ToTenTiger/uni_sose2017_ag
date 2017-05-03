@@ -29,11 +29,11 @@ args = parser.parse_args()
 
 global_vars.cleanup = args.clean
 if args.output == 1:
-    global_vars.print = True
+    global_vars.printout = True
 elif args.output == 2:
     global_vars.view = True
 elif args.output == 3:
-    global_vars.print = True
+    global_vars.printout = True
     global_vars.view = True
 
 

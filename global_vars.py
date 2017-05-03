@@ -1,3 +1,3 @@
-print = False
+printout = False
 view = False
 cleanup = False
