@@ -10,6 +10,9 @@ class Node:
         self.value = value
         self.weight = self.get_and_update_weight_recursive()
 
+    def has_child(self):
+        return self.left_child is not None or self.right_child is not None
+
     def set_children(self, left=None, right=None):
         if self.right_child != right and self.left_child != left:
             self.left_child = left
@@ -29,10 +32,8 @@ class Node:
 
         return self.weight
 
-    def manipulate_weight(self, value):
-        self.weight += value
-        if self.mother is not None:
-            self.get_and_update_weight_recursive()
+    def set_weight(self, value):
+        self.weight = value
 
     def is_valide(self):
         result = True
