@@ -1,3 +1,5 @@
+from itertools import filterfalse
+
 from classes import Request
 from operator import attrgetter
 
@@ -14,27 +16,28 @@ print("\nUsing request list: {}\n".format(value))
 new_input = input("Enter any other list to use or press [Enter] to continue: ")
 if new_input:
     value = new_input
+print()
 
 requests = []
 for (start, end) in value:
     requests.append(Request(start, end))
+for x in requests:
+    count = -1
+    for y in requests:
+        if not x.compatible(y):
+            count += 1
+    x.conflicts = count
 
-# select by strategy: earliest start
-requests_sorted = sorted(requests, key=attrgetter("interval_start"))
-selected_requests = [requests_sorted.pop(0)]
-while len(requests_sorted) > 0:
-    r = requests_sorted.pop(0)
-    compatible = True
-    for selected_r in selected_requests:
-        compatible = selected_r.compatible(r)
-        if not compatible:
-            break
-    if compatible:
+comparison_by = ["interval_start", "interval_length", "interval_end", "conflicts"]
+
+for i, compare_var in enumerate(comparison_by):
+    requests_sorted = sorted(requests, key=attrgetter(compare_var))
+    selected_requests = []
+    while len(requests_sorted) > 0:
+        r = requests_sorted.pop(0)
         selected_requests.append(r)
-
-# TODO why is selected_request so short? seems that th compatible check always returns false
-
-print(selected_requests)
+        requests_sorted[:] = filterfalse(lambda x: not r.compatible(x), requests_sorted)
+    print("Strategie {}: {}".format(i + 1, selected_requests))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("End: Excise 04 Task 16")
+print("\nEnd: Excise 04 Task 16")
