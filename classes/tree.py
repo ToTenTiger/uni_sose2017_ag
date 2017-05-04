@@ -1,6 +1,3 @@
-from node import Node
-
-
 class Tree:
     def __init__(self, root = None):
         self.root = root
@@ -9,5 +6,5 @@ class Tree:
     def add_tree(self, tree):
         pass
 
-    def is_valide(self):
-        return self.root.is_valide
+    def is_valid(self):
+        return self.root.is_valid
