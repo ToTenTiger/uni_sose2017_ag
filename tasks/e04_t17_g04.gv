@@ -1,15 +1,15 @@
 strict graph "Excise 04 Task 17 Graph 04" {
 	a
-		a -- b [label="2|3", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
-		a -- h
-		a -- e [label="2", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
+		a -- b [label="1|2|3", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
+		a -- h [label="1|2", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
+		a -- e [label="1", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
 	b
-		b -- g [label="3", color=darkorange, fontcolor=darkorange, fontsize=16, penwidth=2.5]
-		b -- c
-		b -- e
+		b -- g [label="2|3", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
+		b -- c [label="2|3", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
+		b -- e [label="2|3", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
 		b -- a
 	c
-		c -- h
+		c -- h [label="3", color=darkorange, fontcolor=darkorange, fontsize=16, penwidth=2.5]
 		c -- b
 	d
 		d -- f
@@ -18,15 +18,15 @@ strict graph "Excise 04 Task 17 Graph 04" {
 	e
 		e -- a
 		e -- b
-		e -- d
+		e -- d [label="3", color=darkorange, fontcolor=darkorange, fontsize=16, penwidth=2.5]
 	f
-		f -- d [label="2", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
+		f -- d
 		f -- h
 	g
 		g -- b
 		g -- d
 	h
-		h -- c [label="1|2", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
-		h -- a [label="1|2|3", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
-		h -- f [label="1|2", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
+		h -- c
+		h -- a
+		h -- f [label="2", color=darkgreen, fontcolor=darkgreen, fontsize=16, penwidth=2.5]
 }
