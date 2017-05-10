@@ -100,7 +100,7 @@ class DiGraph(Graph):
     # unsupported methods
 
     def __eq__(self, other):
-        return NotImplemented
+        raise NotImplementedError
 
     def __ne__(self, other):
-        return NotImplemented
+        raise NotImplementedError
