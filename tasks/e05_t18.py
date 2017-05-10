@@ -24,7 +24,7 @@ for i, graph in graphs.items():
     )
 
 for i, r in results.items():
-    print("TopSort results of graph 0{}".format(i))
+    print("\nTopSort results of graph 0{}".format(i))
     print("Kahn:\t{}".format(r[0]))
     print("Tarjan:\t{}".format(r[1]))
 
