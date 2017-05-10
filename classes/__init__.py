@@ -1,8 +1,11 @@
+import errors
+
 from .di_graph import DiGraph
 from .edge import Edge
 from .graph import Graph
+
 from .node import Node
 from .heap_node import HeapNode
 from .request import Request
 
-__all__ = ["Edge", "Graph", "DiGraph", "Node", "HeapNode", "Request"]
+__all__ = ["Edge", "Graph", "DiGraph", "Node", "HeapNode", "Request", "errors"]
