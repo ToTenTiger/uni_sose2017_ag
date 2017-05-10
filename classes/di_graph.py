@@ -1,6 +1,7 @@
 import graphviz as gv
 
 from .graph import Graph
+from classes.errors import FoundCircleError
 
 
 class DiGraph(Graph):
@@ -58,11 +59,15 @@ class DiGraph(Graph):
                 ohne_nachfolger.append(node)
 
         for current_node in ohne_nachfolger:
-            self.top_sort_tarjan_visit(to_so, visited, current_node)
+            try:
+                self.top_sort_tarjan_visit(to_so, visited, current_node)
+            except FoundCircleError:
+                return
 
         return to_so
 
     def top_sort_tarjan_visit(self, to_so, visited, node):
+        # TODO raise FoundCircleError if needed
         if not visited[node]:
             visited[node] = True
             for ancestor in self.get_neighbours_minus(node):
