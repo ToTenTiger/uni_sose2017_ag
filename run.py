@@ -24,10 +24,15 @@ group_run.add_argument("-e", "-execise", dest="execise",
 parser.add_argument("-c", "-clean", dest="clean", action="store_true",
                     help="Delete dot-files after run (pdfs will be keeped)")
 
+parser.add_argument("-f", "-onfly", dest="onfly",
+                    action="store_true",
+                    help="Give option per used graph instance to change adjazenz list")
+
 
 args = parser.parse_args()
 
 global_vars.cleanup = args.clean
+global_vars.onflygraph = args.onfly
 if args.output == 1:
     global_vars.printout = True
 elif args.output == 2:

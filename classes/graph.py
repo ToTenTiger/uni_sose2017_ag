@@ -5,6 +5,7 @@ from typing import List
 import graphviz as gv
 from graphviz.dot import Dot
 
+import global_vars
 from .edge import Edge
 
 
@@ -32,7 +33,7 @@ class Graph:
         raw_input = value
         if not value:
             raw_input = input(text)
-        else:
+        elif global_vars.onflygraph:
             print("\nUsing passed adjazenz list: {}\n".format(value))
             new_input = input("Enter any other list to use or press [Enter] to continue: ")
             if new_input:
