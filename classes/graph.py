@@ -79,7 +79,11 @@ class Graph:
         self.adjazenz.clear()
 
     def get_neighbours_plus(self, node):
-        return deepcopy(self.adjazenz.get(str(node))) or []
+        return deepcopy(
+            list(map(
+                lambda e: Edge(e),
+                self.adjazenz.get(str(node))
+            ))) or []
 
     def get_neighbours_minus(self, node):
         neighbours = []
@@ -98,6 +102,12 @@ class Graph:
             for edge in self.get_neighbours_plus(node):
                 K.append((node, edge))
         return deepcopy(K)
+
+    def get_nodes(self):
+        E = []
+        for node in self.adjazenz.keys():
+            E.append(Edge(node))
+        return E
 
     def kaZu_grad(self, node):
         return self.grad(node)
