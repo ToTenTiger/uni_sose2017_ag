@@ -1,4 +1,4 @@
-strict graph "Excise 04 Task 17 Graph 04" {
+strict graph "Exercise 04 Task 17 Graph 04" {
 	a
 		a -- b [label="1|2|3", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]
 		a -- h [label="1|2", color=blue, fontcolor=blue, fontsize=16, penwidth=2.5]

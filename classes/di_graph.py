@@ -22,7 +22,7 @@ class DiGraph(Graph):
         return self.dot
 
     # ----------------------------------------------------------------
-    # excise methods
+    # Exercise methods
 
     def top_sort_kahn(self):
         to_so = []

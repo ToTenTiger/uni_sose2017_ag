@@ -3,7 +3,7 @@ from itertools import filterfalse
 from classes import Request
 from operator import attrgetter
 
-print("Start: Excise 04 Task 16")
+print("Start: Exercise 04 Task 16")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 value = [[5, 17], [6, 24], [0, 16], [11, 16], [5, 14], [1, 7], [1, 3], [1, 2], [2, 23], [8, 12], [14, 15], [7, 13],
@@ -40,4 +40,4 @@ for i, compare_var in enumerate(comparison_by):
     print("Strategie {}: {}".format(i + 1, selected_requests))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("\nEnd: Excise 04 Task 16")
+print("\nEnd: Exercise 04 Task 16")

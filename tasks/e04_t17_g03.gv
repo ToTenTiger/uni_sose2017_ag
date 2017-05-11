@@ -1,4 +1,4 @@
-strict graph "Excise 04 Task 17 Graph 03" {
+strict graph "Exercise 04 Task 17 Graph 03" {
 	a
 		a -- b
 		a -- h

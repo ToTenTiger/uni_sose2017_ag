@@ -1,9 +1,9 @@
 from tasks import *
 
-print("Start: Excise 01 Task 02")
+print("Start: Exercise 01 Task 02")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-graph = DiGraph(title="Excise 01 Task 02 Graph 01",
+graph = DiGraph(title="Exercise 01 Task 02 Graph 01",
                 filename="e01_t02_g01",
                 allow_multi=True)
 graph.read_input(value="0:2,3,5,7;" +
@@ -23,4 +23,4 @@ dot = create_print_render_dot(graph)
 print("Hierholzer-Folge: {}".format(graph.hierholzer()))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("End: Excise 01 Task 02")
+print("End: Exercise 01 Task 02")

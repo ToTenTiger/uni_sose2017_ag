@@ -1,9 +1,9 @@
 from tasks import *
 
-print("Start: Excise 02 Task 08")
+print("Start: Exercise 02 Task 08")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-graph = DiGraph(title="Excise 02 Task 08 Graph 01",
+graph = DiGraph(title="Exercise 02 Task 08 Graph 01",
                 filename="e02_t08_g01",
                 weighted=True)
 graph.read_input(value="0:2-2,3-4.5,5-4,7-4.5;" +
@@ -21,4 +21,4 @@ graph.read_input(value="0:2-2,3-4.5,5-4,7-4.5;" +
 dot = create_print_render_dot(graph)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("End: Excise 02 Task 08")
+print("End: Exercise 02 Task 08")

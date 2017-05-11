@@ -130,7 +130,7 @@ class Graph:
                 self.dot.edge(node, edge.node, label)
 
     # ----------------------------------------------------------------
-    # excise methods
+    # Exercise methods
 
     def bnb(self, x, y):
         return y in self.get_neighbours_plus(x) or x in self.get_neighbours_plus(y)

@@ -2,7 +2,7 @@ import heapq as h
 from itertools import groupby
 from classes import HeapNode
 
-print("Start: Excise 03 Task 10")
+print("Start: Exercise 03 Task 10")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 string = "abrakadabra"
@@ -18,4 +18,4 @@ for c in string:
 print(heap)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("End: Excise 03 Task 10")
+print("End: Exercise 03 Task 10")

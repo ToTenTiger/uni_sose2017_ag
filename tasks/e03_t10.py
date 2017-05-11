@@ -1,6 +1,6 @@
-print("Start: Excise 03 Task 10")
+print("Start: Exercise 03 Task 10")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("End: Excise 03 Task 10")
+print("End: Exercise 03 Task 10")

@@ -2,7 +2,7 @@ from classes import DiGraph
 from . import create_print_render_dot
 
 
-print("\nStart: Excise 05 Task 18\n")
+print("\nStart: Exercise 05 Task 18\n")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 inputs = ["a:b,d;b:;c:b;d:b;e:c,d;;",
@@ -11,7 +11,7 @@ inputs = ["a:b,d;b:;c:b;d:b;e:c,d;;",
 
 graphs = {}
 for i, v in enumerate(inputs, start=1):
-    graphs[i] = DiGraph(title="Excise 05 Task 18 Graph 0{}".format(i),
+    graphs[i] = DiGraph(title="Exercise 05 Task 18 Graph 0{}".format(i),
                         filename="e05_t18_g0{}".format(i))
     graphs[i].read_input(value=v)
     dot_1 = create_print_render_dot(graphs[i])
@@ -29,4 +29,4 @@ for i, r in results.items():
     print("Tarjan:\t{}".format(r[1]))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("\nEnd: Excise 05 Task 18\n")
+print("\nEnd: Exercise 05 Task 18\n")
