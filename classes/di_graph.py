@@ -67,12 +67,16 @@ class DiGraph(Graph):
         return to_so
 
     def top_sort_tarjan_visit(self, to_so, visited, node):
-        # TODO raise FoundCircleError if needed
         if not visited[node]:
             visited[node] = True
             for ancestor in self.get_neighbours_minus(node):
                 self.top_sort_tarjan_visit(to_so, visited, ancestor)
             to_so.append(node)
+        else:
+            # extension to determine existence of a circle
+            for ancestor in self.get_neighbours_minus(node):
+                if visited[ancestor]:
+                    raise FoundCircleError
 
     # ----------------------------------------------------------------
     # helper methods
