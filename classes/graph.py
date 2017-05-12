@@ -14,19 +14,20 @@ class Graph:
                  title=None,
                  filename: str="graph",
                  body=None,
-                 adjazenzlist: dict=None,
+                 adjazenzdict: dict=None,
                  allow_multi=False,
-                 weighted=False):
+                 weighted=False,
+                 value=None):
         self.dot = Dot()
 
         self.title = title
         self.filename = filename if filename.endswith(".gv") else filename + ".gv"
         self.body = body
-        self.adjazenz = dict()
-        if isinstance(adjazenzlist, dict):
-            self.adjazenz = adjazenzlist
+        self.adjazenz = adjazenzdict if adjazenzdict else dict()
         self.allow_multi = allow_multi
         self.weighted = weighted
+        if not adjazenzdict and value:
+            self.read_input(value)
 
     def read_input(self, value=None, text="Insert graph input string :> "):
         self.clear()
