@@ -66,7 +66,7 @@ class DiGraph(Graph):
             try:
                 self.top_sort_tarjan_visit(visit_order, to_so, visited, current_node)
             except FoundCircleError:
-                return None, visit_order
+                return "Found Circle", visit_order
 
         return to_so, visit_order
 
