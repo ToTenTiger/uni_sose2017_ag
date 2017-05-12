@@ -12,7 +12,7 @@ graph.read_input(value="a:f;b:a;c:a,e;d:b,c,f;e:b,g;f:b;g:c,f;;")
 dot = create_print_render_dot(graph)
 
 graph_strct = DiGraph(title="Exercise 05 Task 19 Graph 01",
-                      filename="e05_t19_g01_structur",
+                      filename="e05_t19_g01_structure",
                       allow_multi=True)
 graph_strct.read_input(value="A:;C:A,A,A;D:A,C;")
 dot_strct = create_print_render_dot(graph_strct)
