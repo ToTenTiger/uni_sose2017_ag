@@ -24,10 +24,11 @@ for i, graph in graphs.items():
         graph.top_sort_tarjan()
     )
 
-for i, r in results.items():
+for i, (kahn, tarjan) in results.items():
     print("\nTopSort results of graph 0{}".format(i))
-    print("Kahn:\t{}".format(r[0]))
-    print("Tarjan:\t{}".format(r[1]))
+    print("Kahn:\t\t{}\n - visit order:\t{}".format(kahn[0], kahn[1]))
+    print("Tarjan:\t\t{}\n - visit order:\t{}".format(tarjan[0], tarjan[1]) +
+          "\n -- excludes loop of ancestor on visit of already visited nodes (find circle feature)")
 
 print_output_info(e="05", t="18")
 

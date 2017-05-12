@@ -25,6 +25,7 @@ class DiGraph(Graph):
     # Exercise methods
 
     def top_sort_kahn(self):
+        visit_order = []
         to_so = []
         ohne_vorgaenger = []
         ein_grade = {}
@@ -38,16 +39,19 @@ class DiGraph(Graph):
 
         while ohne_vorgaenger:
             current_node = ohne_vorgaenger.pop(0)
+            visit_order.append(current_node)
             to_so.append(current_node)
             for successor in self.get_neighbours_plus(current_node):
+                visit_order.append(successor)
                 ein_grade[successor.node] -= 1
                 if ein_grade[successor.node] <= 0:
                     ohne_vorgaenger.append(successor.node)
                     ein_grade.pop(successor.node)
 
-        return to_so
+        return to_so, visit_order
 
     def top_sort_tarjan(self):
+        visit_order = []
         to_so = []
         visited = {}
         ohne_nachfolger = []
@@ -60,17 +64,18 @@ class DiGraph(Graph):
 
         for current_node in ohne_nachfolger:
             try:
-                self.top_sort_tarjan_visit(to_so, visited, current_node)
+                self.top_sort_tarjan_visit(visit_order, to_so, visited, current_node)
             except FoundCircleError:
-                return
+                return None, visit_order
 
-        return to_so
+        return to_so, visit_order
 
-    def top_sort_tarjan_visit(self, to_so, visited, node):
+    def top_sort_tarjan_visit(self, visit_order, to_so, visited, node):
+        visit_order.append(node)
         if not visited[node]:
             visited[node] = True
             for ancestor in self.get_neighbours_minus(node):
-                self.top_sort_tarjan_visit(to_so, visited, ancestor)
+                self.top_sort_tarjan_visit(visit_order, to_so, visited, ancestor)
             to_so.append(node)
         else:
             # extension to determine existence of a circle
