@@ -1,4 +1,5 @@
 import argparse
+from sys import exit as sysexit
 
 import global_vars
 
@@ -81,3 +82,5 @@ else:
             import tasks.e05_t19
         elif args.execise == 6:
             import tasks.e06_t23
+
+sysexit()

@@ -94,7 +94,7 @@ class DiGraph(Graph):
 
     def find_msb(self):
         # TODO implement me
-        exit("Not implemented yet")
+        raise NotImplementedError
 
     def kaZu_grad(self, node):
         return self.ein_grad(node)
