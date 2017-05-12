@@ -83,6 +83,12 @@ class DiGraph(Graph):
                 if visited[ancestor]:
                     raise FoundCircleError
 
+    def trans_conclusion_reduction(self):
+        # graph has to be a DAG (tree and circle free)
+        # nodes and their neighbour list has to be top. sorted
+        # and report if not
+
+        return dict(g="<adj_list>", c="<adj_list>", r="<adj_list>")
     # ----------------------------------------------------------------
     # helper methods
 
