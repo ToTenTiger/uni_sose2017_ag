@@ -19,5 +19,5 @@ def read_dot_body(filepath):
 
 
 def print_output_info(e, t):
-    print("\nGraphs has been generated under directory 'graphs'." +
+    print("\nGraph(s) has been generated under directory 'graphs'." +
           "\nFile name pattern e{}_t{}_g<NUMBER>\n".format(e, t))
