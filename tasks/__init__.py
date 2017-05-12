@@ -1,5 +1,4 @@
 import global_vars
-from classes import *
 
 
 def create_print_render_dot(graph):
@@ -18,4 +17,7 @@ def create_print_render_dot(graph):
 def read_dot_body(filepath):
     return open(filepath).readlines()[1:-1]
 
-__all__ = ["Edge", "DiGraph", "Graph", "create_print_render_dot"]
+
+def print_output_info(e, t):
+    print("\nGraphs has been generated under directory 'graphs'." +
+          "\nFile name pattern e{}_t{}_g<NUMBER>\n".format(e, t))

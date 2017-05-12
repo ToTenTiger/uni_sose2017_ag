@@ -3,6 +3,7 @@ from os.path import join as get_path
 from classes import Graph
 from . import create_print_render_dot
 from . import read_dot_body
+from . import print_output_info
 
 
 print("Start: Exercise 04 Task 17")
@@ -27,8 +28,7 @@ for i, file in enumerate(files, start=2):
               filename="e04_t17_g0{}".format(i),
               body=read_dot_body(get_path("tasks", "e04_t17_g0{}.gv".format(i)))))
 
-print("\nGraphs has been generated under directory 'graphs'." +
-      "\nFile name pattern e04_t17_g<NUMBER>\n")
+print_output_info(e="04", t="17")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 print("End: Exercise 04 Task 17")

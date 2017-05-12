@@ -1,5 +1,6 @@
 from classes import DiGraph
 from . import create_print_render_dot
+from . import print_output_info
 
 
 print("\nStart: Exercise 05 Task 18\n")
@@ -27,6 +28,8 @@ for i, r in results.items():
     print("\nTopSort results of graph 0{}".format(i))
     print("Kahn:\t{}".format(r[0]))
     print("Tarjan:\t{}".format(r[1]))
+
+print_output_info(e="05", t="18")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 print("\nEnd: Exercise 05 Task 18\n")
