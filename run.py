@@ -9,7 +9,8 @@ parser = argparse.ArgumentParser(description="Execute some pre-defined graph ope
 parser.add_argument("-o", "-output", dest="output",
                     type=int,
                     choices=[0, 1, 2, 3], default=0,
-                    help="[0] Nothing (default); [1] Print dot-file; [2] Open pdf; [3]=1 and 2")
+                    help="Choose way to output generated graphs: (default = 0) | " +
+                         "[0] no action; [1] Print dot-file; [2] Open pdf(s); [3] 1 and 2")
 
 group_run = parser.add_mutually_exclusive_group()
 group_run.add_argument("-t", "-task", dest="task",
