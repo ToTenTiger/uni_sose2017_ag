@@ -94,15 +94,8 @@ class DiGraph(Graph):
             if node.node not in ds_nr:
                 count = self.szhk_search(ds_nr, min_nr, count, deck, node)
 
-        szhk = []
-        szhk_v = []
-        for k, v in min_nr.items():
-            if v not in szhk_v:
-                szhk_v.append(v)
-                szhk.append(k)
-
         from classes import returnObject
-        return returnObject(dict(depth=ds_nr, min=min_nr, root=self.get_nodes()[0], szhk=szhk))
+        return returnObject(dict(depth=ds_nr, min=min_nr))
 
     def szhk_search(self, ds_nr, min_nr, count, deck, node):
         count += 1
@@ -118,8 +111,18 @@ class DiGraph(Graph):
                 min_nr[node.node] = min(min_nr.get(node.node), min_nr.get(successor.node))
 
         if ds_nr.get(node.node) == min_nr.get(node.node):
-            while deck.pop() != node:
-                pass
+            szhk = []
+            while True:
+                cur_node = deck.pop()
+                szhk.append(cur_node)
+                if cur_node == node:
+                    break
+            root = szhk[-1]
+            print("Fount strong correlation component (scc) in {}:".format(self.filename))
+            print("\t|- Root\t: {}".format(root))
+            print("\t|- scc\t: {}".format(szhk))
+            print("\t|- dsNr\t: {}".format(ds_nr[root]))
+            print("\t|- minNr: {}".format(min_nr[root]))
 
         return count
 
