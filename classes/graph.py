@@ -17,7 +17,8 @@ class Graph:
                  adjazenzdict: dict=None,
                  allow_multi=False,
                  weighted=False,
-                 value=None):
+                 value=None,
+                 onfly_allowed=True):
         self.dot = Dot()
 
         self.title = title
@@ -27,16 +28,21 @@ class Graph:
         self.allow_multi = allow_multi
         self.weighted = weighted
         if not adjazenzdict and value:
-            self.read_input(value)
+            self.read_input(value, onfly_allowed)
 
-    def read_input(self, value=None, text="Insert graph input string :> ", onfly_allowed=True):
+    def read_input(self, value=None, onfly_allowed=True):
         self.clear()
         raw_input = value
-        if not value:
-            raw_input = input(text)
-        elif onfly_allowed and global_vars.onflygraph:
-            print("\nUsing passed adjazenz list: {}\n".format(value))
-            new_input = input("Enter any other list to use or press [Enter] to continue: ")
+        if onfly_allowed and global_vars.onflygraph:
+            formats = dict(default="(<node>: <list of <node>>;)*;",
+                           weighted="(<node>: <list of <node>-<weight>>;)*;")
+            regex_format = formats["default"] if not self.weighted else formats["weighted"]
+
+            print("\nPassed adjazenz list for {}: {}".format(self.filename, value))
+            print("Please use following string format:\n" +
+                  " |- <node>\t   = [A-Za-z0-9_]\n" +
+                  " |- <adjazenzlist> = {}".format(regex_format))
+            new_input = input("Enter another <adjazenzlist> or just press [Enter]: ")
             if new_input:
                 raw_input = new_input
 

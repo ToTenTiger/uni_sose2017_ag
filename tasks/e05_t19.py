@@ -7,15 +7,16 @@ print("\nStart: Exercise 05 Task 19\n")
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 graph = DiGraph(title="Exercise 05 Task 19 Graph 01",
-                filename="e05_t19_g01")
-graph.read_input(value="a:f;b:a;c:a,e;d:b,c,f;e:b,g;f:b;g:c,f;;")
+                filename="e05_t19_g01",
+                value="a:f;b:a;c:a,e;d:b,c,f;e:b,g;f:b;g:c,f;;")
 result = graph.szhk()
 dot = create_print_render_dot(graph)
 
 graph_strct = DiGraph(title="Exercise 05 Task 19 Graph 01",
                       filename="e05_t19_g01_structure",
-                      allow_multi=True)
-graph_strct.read_input(value="A:;C:A,A,A;D:A,C;", onfly_allowed=False)
+                      allow_multi=True,
+                      value="A:;C:A,A,A;D:A,C;",
+                      onfly_allowed=False)
 dot_strct = create_print_render_dot(graph_strct)
 
 print_output_info(e="05", t="19")
