@@ -80,11 +80,10 @@ class Graph:
         self.adjazenz.clear()
 
     def get_neighbours_plus(self, node):
-        return deepcopy(
-            list(map(
-                lambda e: Edge(e),
-                self.adjazenz.get(str(node))
-            ))) or []
+        return list(map(
+            lambda e: Edge(e),
+            self.adjazenz.get(str(node))
+        )) or []
 
     def get_neighbours_minus(self, node):
         neighbours = []

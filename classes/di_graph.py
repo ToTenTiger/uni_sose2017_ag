@@ -84,10 +84,44 @@ class DiGraph(Graph):
                 if visited[ancestor]:
                     raise FoundCircleError
 
-    def search_szhk(self):
+    def szhk(self):
+        ds_nr = {}
+        min_nr = {}
+        count = 0
+        deck = []
+
+        for node in self.get_nodes():
+            if node.node not in ds_nr:
+                count = self.szhk_search(ds_nr, min_nr, count, deck, node)
+
+        szhk = []
+        szhk_v = []
+        for k, v in min_nr.items():
+            if v not in szhk_v:
+                szhk_v.append(v)
+                szhk.append(k)
 
         from classes import returnObject
-        return returnObject(dict(depth=-1, min=-1, root="", szhk=""))
+        return returnObject(dict(depth=ds_nr, min=min_nr, root=self.get_nodes()[0], szhk=szhk))
+
+    def szhk_search(self, ds_nr, min_nr, count, deck, node):
+        count += 1
+        ds_nr[node.node] = count
+        min_nr[node.node] = count
+        deck.append(node)
+
+        for successor in self.get_neighbours_plus(node):
+            if successor.node not in ds_nr:
+                count = self.szhk_search(ds_nr, min_nr, count, deck, successor)
+                min_nr[node.node] = min(min_nr.get(node.node), min_nr.get(successor.node))
+            elif successor in deck:
+                min_nr[node.node] = min(min_nr.get(node.node), min_nr.get(successor.node))
+
+        if ds_nr.get(node.node) == min_nr.get(node.node):
+            while deck.pop() != node:
+                pass
+
+        return count
 
     def trans_conclusion_reduction(self):
         # graph has to be a DAG (tree and circle free)
