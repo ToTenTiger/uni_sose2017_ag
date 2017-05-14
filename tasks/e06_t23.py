@@ -20,11 +20,11 @@ for i, adjazenzlist in enumerate(inputs, start=1):
     dot = create_print_render_dot(graph)
 
 for i, r in enumerate(results, start=1):
-    print("\n__Graph_0{}__________:\t{}".format(i, r["g"]))
-    print(" - trans. conclusion:\t{}".format(r["c"]))
-    print(" - trans. reduction :\t{}".format(r["r"]))
+    print("\n__Graph_0{}__________:\t{}".format(i, r.g))
+    print(" - trans. conclusion:\t{}".format(r.c))
+    print(" - trans. reduction :\t{}".format(r.r))
 
 print_output_info(e="06", t="23")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-print("\nEnd: Exercise 06 Task 23\n")
+print("End: Exercise 06 Task 23\n")

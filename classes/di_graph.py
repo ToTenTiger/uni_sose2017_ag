@@ -1,10 +1,11 @@
 import graphviz as gv
 
+from .errors import FoundCircleError
 from .graph import Graph
-from classes.errors import FoundCircleError
 
 
 class DiGraph(Graph):
+
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
@@ -83,12 +84,18 @@ class DiGraph(Graph):
                 if visited[ancestor]:
                     raise FoundCircleError
 
+    def search_szhk(self):
+
+        from classes import returnObject
+        return returnObject(dict(depth=-1, min=-1, root="", szhk=""))
+
     def trans_conclusion_reduction(self):
         # graph has to be a DAG (tree and circle free)
         # nodes and their neighbour list has to be top. sorted
         # and report if not
 
-        return dict(g="<adj_list>", c="<adj_list>", r="<adj_list>")
+        from classes import returnObject
+        return returnObject(dict(g="<adj_list>", c="<adj_list>", r="<adj_list>"))
     # ----------------------------------------------------------------
     # helper methods
 
