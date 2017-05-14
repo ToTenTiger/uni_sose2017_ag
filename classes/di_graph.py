@@ -117,12 +117,11 @@ class DiGraph(Graph):
                 szhk.append(cur_node)
                 if cur_node == node:
                     break
-            root = szhk[-1]
-            print("Fount strong correlation component (scc) in {}:".format(self.filename))
-            print("\t|- Root\t: {}".format(root))
+            print("Found strong correlation component (scc) in {}:".format(self.filename))
+            print("\t|- Root\t: {}".format(szhk[-1]))
             print("\t|- scc\t: {}".format(szhk))
-            print("\t|- dsNr\t: {}".format(ds_nr[root]))
-            print("\t|- minNr: {}".format(min_nr[root]))
+            print("\t|- dsNr\t: {}".format(ds_nr))
+            print("\t|- minNr: {}".format(min_nr))
 
         return count
 
