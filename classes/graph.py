@@ -29,12 +29,12 @@ class Graph:
         if not adjazenzdict and value:
             self.read_input(value)
 
-    def read_input(self, value=None, text="Insert graph input string :> "):
+    def read_input(self, value=None, text="Insert graph input string :> ", onfly_allowed=True):
         self.clear()
         raw_input = value
         if not value:
             raw_input = input(text)
-        elif global_vars.onflygraph:
+        elif onfly_allowed and global_vars.onflygraph:
             print("\nUsing passed adjazenz list: {}\n".format(value))
             new_input = input("Enter any other list to use or press [Enter] to continue: ")
             if new_input:
