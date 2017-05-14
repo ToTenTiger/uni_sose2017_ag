@@ -88,7 +88,7 @@ class Graph:
     def get_neighbours_plus(self, node):
         return list(map(
             lambda e: Edge(e),
-            self.adjazenz.get(str(node))
+            self.adjazenz.get(str(node)) or []
         )) or []
 
     def get_neighbours_minus(self, node):
