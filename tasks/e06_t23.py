@@ -11,6 +11,15 @@ inputs = ["a:b,c,d;b:c;c:d;d:;;",
           "a:i,j;b:f,h;c:b,d;d:f,e,i,g;e:h,g;f:i,e;g:i,j,h;h:a;i:;j:i;k:c,b;;",
           "a:b;b:j;c:a;d:g,h;e:b,d;f:e,h;g:b,c;h:a,c;i:f,g,j;j:;;",
           "a:b;b:j;c:a;d:g,h;e:b,d;f:e,h;g:b,c;h:a,c;i:f,g,j;j:f;;"]
+
+print("Do you want to parse a file with 'ag' strings per line?")
+file_request = input("Then enter a path > ")
+if file_request:
+    inputs.clear()
+    file = open(file_request)
+    for line in file:
+        inputs.append(line)
+
 results = []
 for i, adjazenzlist in enumerate(inputs, start=1):
     graph = DiGraph(title="Exercise 06 Task 23 Graph 0{}".format(i),
@@ -23,6 +32,7 @@ for i, r in enumerate(results, start=1):
     print("\n__Graph_0{}__________:\t{}".format(i, r.g))
     print(" - trans. conclusion:\t{}".format(r.c))
     print(" - trans. reduction :\t{}".format(r.r))
+    print(" - count of edges   :\t{}".format(r.e))
 
 print_output_info(e="06", t="23")
 
