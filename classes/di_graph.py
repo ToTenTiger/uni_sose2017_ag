@@ -1,6 +1,9 @@
+from copy import deepcopy
 import graphviz as gv
 
 from .errors import FoundCircleError
+from .errors import MultiEdgesNotAllowedError
+from .edge import Edge
 from .graph import Graph
 
 
@@ -126,18 +129,45 @@ class DiGraph(Graph):
         return count
 
     def trans_conclusion_reduction(self):
-        # graph has to be a DAG (tree and circle free)
-        # nodes and their neighbour list has to be top. sorted
-        # and report if not
+        graph = graph_plus = graph_minus = deepcopy(self)
 
         from classes import returnObject
-        return returnObject(dict(
-            g=str(self),
-            c="<adj_list>",
-            r="<adj_list>",
-            e=len(self.get_edges())))
+        result = returnObject(dict(
+            graph=graph,
+            graph_edges=len(graph.get_edges()),
+            conclusion="<none>",
+            conclusion_edges=-1,
+            reduction="<none>",
+            reduction_edges=-1))
+
+        to_so = graph.top_sort_tarjan()
+        if not to_so[0]:
+            return result
+
+        for e in reversed(to_so[0]):  # reverse loop through top. sorted nodes
+            for y in graph.get_neighbours_plus(e):  # TODO top. sort N+
+                for z in graph_plus.get_neighbours_plus(y):
+                    # TODO remove try-catch after N+ war top. sorted
+                    try:
+                        graph_plus.add_edge(e, z)
+                    except MultiEdgesNotAllowedError:
+                        pass
+                for x in graph.get_neighbours_plus(e):
+                    if to_so[0].index(x) < to_so[0].index(y) and graph_plus.has_edge(x, y):
+                        graph_minus.remove_edge(e, y)
+
+        # TODO for some reasons assigning graphs result in a tuple (g, None)
+        result.conclusion = graph_plus,
+        result.conclusion_edges = len(graph_plus.get_edges())
+        result.reduction = graph_minus,
+        result.reduction_edges = len(graph_minus.get_edges())
+        return result
+
     # ----------------------------------------------------------------
     # helper methods
+
+    def has_edge(self, x: Edge, y: Edge):
+        return (x, y) in self.get_edges()
 
     def find_msb(self):
         # TODO implement me
@@ -154,11 +184,11 @@ class DiGraph(Graph):
         return v, edge
 
     # ----------------------------------------------------------------
-    # maybe not needed - after call a toGraph call is needed
+    # maybe not needed: after call a toDot call is needed
 
     def remove_edge(self, node, edge):
         x, y = node, edge
-        if y not in self.adjazenz[x] :
+        if y not in self.adjazenz[x]:
             print("Edge {} not exists".format((x, y)))
             return
         self.adjazenz[x].remove(y)
