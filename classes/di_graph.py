@@ -131,7 +131,11 @@ class DiGraph(Graph):
         # and report if not
 
         from classes import returnObject
-        return returnObject(dict(g="<adj_list>", c="<adj_list>", r="<adj_list>"))
+        return returnObject(dict(
+            g=str(self),
+            c="<adj_list>",
+            r="<adj_list>",
+            e=len(self.get_edges())))
     # ----------------------------------------------------------------
     # helper methods
 
