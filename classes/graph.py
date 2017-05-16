@@ -6,6 +6,7 @@ import graphviz as gv
 from graphviz.dot import Dot
 
 import global_vars
+from.errors import MultiEdgesNotAllowedError
 from .edge import Edge
 
 
@@ -251,11 +252,9 @@ class Graph:
             print("Node not found")
         else:
             assert isinstance(edges, list)
-            if not self.allow_multi:
-                if edge in edges:
-                    print("Multi edges not allowed")
-                    return
-            edges.append(edge)
+            if not self.allow_multi and edge in edges:
+                raise MultiEdgesNotAllowedError
+            self.adjazenz[str(node)].append(edge)
 
     def add_edges(self, node, edges: List[Edge]):
         for edge in edges:
