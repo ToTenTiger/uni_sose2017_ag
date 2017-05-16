@@ -79,6 +79,24 @@ class Graph:
             self._buildDot()
         return self.dot
 
+    def __str__(self):
+        ag = ""
+        for node in self.get_nodes():
+            ag += "{}:".format(node)
+            neighbours_plus = self.get_neighbours_plus(node)
+            for i, edge in enumerate(neighbours_plus):
+                ag += "{}".format(edge)
+                if self.weighted:
+                    ag += "-{}".format(edge.weight)
+                if i < len(neighbours_plus)-1:
+                    ag += ","
+            ag += ";"
+        ag += ";"
+        return ag
+
+    def __repr__(self):
+        return self.__str__()
+
     # ----------------------------------------------------------------
     # helper methods
 
