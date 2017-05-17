@@ -80,7 +80,7 @@ class Graph:
             self._buildDot()
         return self.dot
 
-    def __str__(self):
+    def to_string(self):
         ag = ""
         for node in self.get_nodes():
             ag += "{}:".format(node)
@@ -93,7 +93,10 @@ class Graph:
                     ag += ","
             ag += ";"
         ag += ";"
-        return ag
+        return str(ag)
+
+    def __str__(self):
+        return self.to_string()
 
     def __repr__(self):
         return self.__str__()
