@@ -1,3 +1,4 @@
+from itertools import filterfalse
 from copy import deepcopy
 import graphviz as gv
 
@@ -8,7 +9,6 @@ from .graph import Graph
 
 
 class DiGraph(Graph):
-
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
 
@@ -129,7 +129,9 @@ class DiGraph(Graph):
         return count
 
     def trans_conclusion_reduction(self):
-        graph = graph_plus = graph_minus = deepcopy(self)
+        graph = deepcopy(self)
+        graph_plus = deepcopy(self)
+        graph_minus = deepcopy(self)
 
         from classes import returnObject
         result = returnObject(dict(
@@ -144,23 +146,26 @@ class DiGraph(Graph):
         if not to_so[0]:
             return result
 
-        for e in reversed(to_so[0]):  # reverse loop through top. sorted nodes
-            for y in graph.get_neighbours_plus(e):  # TODO top. sort N+
+        for e in list(reversed(to_so[0])):  # reverse loop through top. sorted nodes
+            top_sorted_successors_e = list(filterfalse(lambda n: n not in graph.get_neighbours_plus(e), to_so[0]))
+            for y in top_sorted_successors_e:
                 for z in graph_plus.get_neighbours_plus(y):
-                    # TODO remove try-catch after N+ war top. sorted
                     try:
                         graph_plus.add_edge(e, z)
                     except MultiEdgesNotAllowedError:
+                        print("[DEBUG] Adding already existing edge is forbidden")  # TODO Why we even face this case?
                         pass
                 for x in graph.get_neighbours_plus(e):
                     if to_so[0].index(x) < to_so[0].index(y) and graph_plus.has_edge(x, y):
                         graph_minus.remove_edge(e, y)
 
-        # TODO for some reasons assigning graphs result in a tuple (g, None)
-        result.conclusion = graph_plus,
-        result.conclusion_edges = len(graph_plus.get_edges())
-        result.reduction = graph_minus,
-        result.reduction_edges = len(graph_minus.get_edges())
+        result = returnObject(dict(
+            graph=graph,
+            graph_edges=len(graph.get_edges()),
+            conclusion=graph_plus,
+            conclusion_edges=len(graph_plus.get_edges()),
+            reduction=graph_minus,
+            reduction_edges=len(graph_minus.get_edges())))
         return result
 
     # ----------------------------------------------------------------
