@@ -174,7 +174,7 @@ class Graph:
 
     def hierholzer(self):
         if self.dot.strict:
-            print("Method hierholzer not supported for graphs without cycles")
+            print("[INFO] Method hierholzer not supported for graphs without cycles")
             return
 
         d = []  # liste von allen eckengraden
@@ -186,10 +186,10 @@ class Graph:
                 ung.append(node)
 
         if 0 in d:
-            print("Kein Euler-KaZu, der Graph ist nicht zh")
+            print("[INFO] Kein Euler-KaZu, der Graph ist nicht zh")
             return False
         if len(ung) > 2 or len(ung) == 1:
-            print("Kein Euler-KaZu, > 2 oder 1 Ecke(n) mit ung. Grad")
+            print("[INFO] Kein Euler-KaZu, > 2 oder 1 Ecke(n) mit ung. Grad")
             return False
 
         u = next(iter(self.adjazenz.keys()))
@@ -215,13 +215,13 @@ class Graph:
             if not u:
                 exit("DAAAAANGER or not??????")
 
-            #print("Target-{}".format(z)) # debug
+            #print("[DEBUG] Target-{}".format(z)) # debug
             sub_euler = []
             while True:
-                #print("Current-{} Neighbours-{}".format(u, graph.get_neighbours(u))) # debug
+                #print("[DEBUG] Current-{} Neighbours-{}".format(u, graph.get_neighbours(u))) # debug
                 v, edge = graph.kaZu_next_edge(u, graph_edges)
 
-                #print("e({}, {})".format(edge[0], edge[1])) # debug
+                #print("[DEBUG] e({}, {})".format(edge[0], edge[1])) # debug
                 sub_euler.append(v)
                 graph_edges.remove(edge)
                 graph.remove_edge(edge[0], edge[1])
@@ -240,19 +240,19 @@ class Graph:
 
     def add_node(self, node, edges=None):
         if not isinstance(edges, list):
-            print("IllegalArgument: edges has to be a list")
+            print("[ERROR] IllegalArgument: edges has to be a list")
             edges = []
         if node not in self.adjazenz.keys():
             self.adjazenz[node] = edges
             return self.adjazenz[node]
         else:
-            print("Node {} already exists: no changes made", node)
+            print("[DEBUG] Node {} already exists: no changes made", node)
             return self.get_neighbours_plus(node)
 
     def add_edge(self, node, edge: Edge):
         edges = self.adjazenz[str(node)]
         if edges is None:
-            print("Node not found")
+            print("[DEBUG] Node not found")
         else:
             assert isinstance(edges, list)
             if not self.allow_multi and edge in edges:
@@ -265,9 +265,9 @@ class Graph:
 
     def remove_edge(self, node, edge):
         x, y = node, edge
-        #print("({}, {})".format(x, y)) # debug
+        #print("[DEBUG] ({}, {})".format(x, y)) # debug
         if y not in self.adjazenz[x] and x not in self.adjazenz[y]:
-            print("Edge {} in both directions not exists".format((x, y)))
+            print("[DEBUG] Edge {} in both directions not exists".format((x, y)))
             return
         if y not in self.adjazenz[x]:
             tmp = x

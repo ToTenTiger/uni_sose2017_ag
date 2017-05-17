@@ -144,6 +144,7 @@ class DiGraph(Graph):
 
         to_so = graph.top_sort_tarjan()
         if not to_so[0]:
+            print("[DEBUG] No top. sort found.")
             return result
 
         for e in list(reversed(to_so[0])):  # reverse loop through top. sorted nodes
@@ -194,7 +195,7 @@ class DiGraph(Graph):
     def remove_edge(self, node, edge):
         x, y = node, edge
         if y not in self.adjazenz[x]:
-            print("Edge {} not exists".format((x, y)))
+            print("[DEBUG] Edge {} not exists".format((x, y)))
             return
         self.adjazenz[x].remove(y)
 

@@ -24,7 +24,9 @@ for i, adjazenzlist in enumerate(inputs, start=1):
     graph = DiGraph(title="Exercise 06 Task 23 Graph 0{}".format(i),
                     filename="e06_t23_g0{}".format(i),
                     value=adjazenzlist)
+    print("Processing graph 0{} >>> Start <<<".format(i))
     r = graph.trans_conclusion_reduction()
+    print("Processing graph 0{} >>> End <<<".format(i))
     results.append(r)
     create_print_render_dot(graph)
     if r.conclusion_edges > 0 and r.reduction_edges > 0:
