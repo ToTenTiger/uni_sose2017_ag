@@ -154,7 +154,7 @@ class DiGraph(Graph):
                     try:
                         graph_plus.add_edge(e, z)
                     except MultiEdgesNotAllowedError:
-                        print("[DEBUG] Adding already existing edge is forbidden")  # TODO Why we even face this case?
+                        print("[DEBUG] Adding already existing edge is forbidden")  # TODO Why we even face this case? <- 'cause we could have added the edge while we were in an earlier iteration of loop
                         pass
                 for x in graph.get_neighbours_plus(e):
                     if to_so[0].index(x) < to_so[0].index(y) and graph_plus.has_edge(x, y):
