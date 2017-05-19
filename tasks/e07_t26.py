@@ -72,7 +72,9 @@ for i, adjazenzlist in enumerate(inputs, start=1):
     create_print_render_dot(graph)
 
 for i, r in enumerate(results, start=1):
-    print("\n__Graph_0{}___________: <not implemented yet>".format(i))
+    print("\n__Graph_0{}___________: {}".format(i, "<not implemented yet>"))
+    print(" - chromatische Zahl : {}".format("<not implemented yet>"))
+    print(" - {}-Färbung\t: {}".format("<-1>", "<not implemented yet>"))
 
 print_output_info(e="07", t="26")
 
