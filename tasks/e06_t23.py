@@ -46,6 +46,7 @@ for i, r in enumerate(results, start=1):
         print(" - trans. reduction  : (Edges={})\t{}".format(r.reduction_edges, r.reduction))
     else:
         print(" [WARN] No top. sort : found circle!")
+
 print_output_info(e="06", t="23")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

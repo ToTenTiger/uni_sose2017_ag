@@ -235,6 +235,9 @@ class Graph:
                 euler.insert(euler.index(u) + 1 + i, sub_node)
         return euler
 
+    def colorize(self):
+        return None
+
     # ----------------------------------------------------------------
     # maybe not needed - after call a toGraph call is needed
 

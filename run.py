@@ -15,12 +15,12 @@ parser.add_argument("-o", "-output", dest="output",
 group_run = parser.add_mutually_exclusive_group()
 group_run.add_argument("-t", "-task", dest="task",
                        type=int,
-                       choices=[1, 2, 8, 10, 16, 17, 18, 19, 23],
+                       choices=[1, 2, 8, 10, 16, 17, 18, 19, 23, 26],
                        help="Choose the task to run (-e will be ignored)")
 
 group_run.add_argument("-e", "-execise", dest="execise",
                        type=int,
-                       choices=range(1, 7),
+                       choices=range(1, 8),
                        help="Choose the execise to run completly")
 
 parser.add_argument("-c", "-clean", dest="clean", action="store_true",
@@ -45,7 +45,7 @@ elif args.output == 3:
 
 
 if not args.task and not args.execise:
-    import tasks.e06_t23
+    import tasks.e07_t26
 else:
     if args.task:
         if args.task == 1:
@@ -66,6 +66,8 @@ else:
             import tasks.e05_t19
         elif args.task == 23:
             import tasks.e06_t23
+        elif args.task == 26:
+            import tasks.e07_t26
     elif args.execise:
         if args.execise == 1:
             import tasks.e01_t01
@@ -82,5 +84,7 @@ else:
             import tasks.e05_t19
         elif args.execise == 6:
             import tasks.e06_t23
+        elif args.execise == 7:
+            import tasks.e07_t26
 
 sysexit()
