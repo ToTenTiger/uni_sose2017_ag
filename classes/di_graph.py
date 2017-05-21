@@ -79,13 +79,12 @@ class DiGraph(Graph):
         if not visited[node]:
             visited[node] = True
             for ancestor in self.get_neighbours_minus(node):
-                self.top_sort_tarjan_visit(visit_order, to_so, visited, ancestor)
+                if not self.top_sort_tarjan_visit(visit_order, to_so, visited, ancestor):
+                    if self.path(node, ancestor):
+                        raise FoundCircleError
             to_so.append(node)
-        else:
-            # extension to determine existence of a circle
-            for ancestor in self.get_neighbours_minus(node):
-                if visited[ancestor]:
-                    raise FoundCircleError
+            return True
+        return False
 
     def szhk(self):
         ds_nr = {}
@@ -171,6 +170,29 @@ class DiGraph(Graph):
 
     # ----------------------------------------------------------------
     # helper methods
+
+    def path(self, x: Edge, y: Edge):
+        path = []
+        if self.path_visit(path, x, y):
+            return path
+        return None
+
+    def path_visit(self, path: list, current: Edge, target: Edge):
+        path.append(current)
+
+        if current == target:
+            return True
+
+        ancestors = self.get_neighbours_plus(current)
+        if target in ancestors:
+            path.append(target)
+            return True
+
+        for z in ancestors:
+            return self.path_visit(path, z, target)
+
+        return False
+
 
     def has_edge(self, x: Edge, y: Edge):
         return (x, y) in self.get_edges()
