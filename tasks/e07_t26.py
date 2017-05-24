@@ -65,14 +65,13 @@ results = []
 for i, adjazenzlist in enumerate(inputs[:3], start=1):
     graph = Graph(title="Exercise 07 Task 26 Graph 0{}".format(i),
                   filename="e07_t26_g0{}".format(i),
-                  value=adjazenzlist)
+                  value=adjazenzlist,
+                  node_attr={"colorscheme": "set311", "style": "filled"})
     r = graph.colorize(10)
     results.append(r)
     create_print_render_dot(graph)
 
 for i, (c, c_list) in enumerate(results, start=1):
-    # print("\n__Graph_0{}___________: {}".format(i, "<not implemented yet>"))
-    # print(" - chromatische Zahl : {}".format("<not implemented yet>"))
     print("{}-Färbung\t: {}".format(c, c_list))
 
 print_output_info(e="07", t="26")

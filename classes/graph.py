@@ -6,7 +6,7 @@ import graphviz as gv
 from graphviz.dot import Dot
 
 import global_vars
-from.errors import MultiEdgesNotAllowedError
+from .errors import MultiEdgesNotAllowedError
 from .edge import Edge
 
 
@@ -19,7 +19,10 @@ class Graph:
                  allow_multi=False,
                  weighted=False,
                  value=None,
-                 onfly_allowed=True):
+                 onfly_allowed=True,
+                 graph_attr=None,
+                 node_attr=None,
+                 edge_attr=None):
         self.dot = Dot()
 
         self.title = title
@@ -30,6 +33,9 @@ class Graph:
         self.weighted = weighted
         if not adjazenzdict and value:
             self.read_input(value, onfly_allowed)
+        self.graph_attr = graph_attr if graph_attr else {}
+        self.node_attr = node_attr if node_attr else {}
+        self.edge_attr = edge_attr if edge_attr else {}
 
     def read_input(self, value=None, onfly_allowed=True):
         self.clear()
@@ -51,18 +57,20 @@ class Graph:
             pattern = regex_compile("(\w+):(\w+|[\w,]*);")
             for (node, edges) in pattern.findall(raw_input):
                 edge_list = str(edges).split(",")
-                self.add_node(node, [])
+                n = Edge(node)
+                self.add_node(n, [])
                 # converts list<str> on the fly to list<Edge>
                 # list+filter contruct to ignor empty entries
-                self.add_edges(node, [Edge(e) for e in list(filter(None, edge_list))])
+                self.add_edges(n, [Edge(e) for e in list(filter(None, edge_list))])
         else:
             pattern_nodes = regex_compile("(\w+):(|(?:\w+-\d+(?:\.\d+)?)(?:,\w+-\d+(?:\.\d+)?)*);")
             pattern_edges = regex_compile("(\d+)-(\d+(?:\.\d+)?)")
             for (node, edges) in pattern_nodes.findall(raw_input):
-                self.add_node(node, [])
+                n = Edge(node)
+                self.add_node(n, [])
                 for (edge, weight) in pattern_edges.findall(edges):
                     e = Edge(edge, weight)
-                    self.add_edge(node, e)
+                    self.add_edge(n, e)
 
     def to_dot(self):
         self.dot = gv.Graph(
@@ -70,9 +78,9 @@ class Graph:
             directory="graphs",
             filename=self.filename,
             strict=not self.allow_multi,
-            graph_attr={},
-            node_attr={},
-            edge_attr={},
+            graph_attr=self.graph_attr,
+            node_attr=self.node_attr,
+            edge_attr=self.edge_attr,
             body=self.body
         )
 
@@ -152,10 +160,12 @@ class Graph:
 
     def _buildDot(self):
         for node, edges in self.adjazenz.items():
-            self.dot.node(node)
+            color = str(node.color) if node.color else None
+            self.dot.node(node.name, fillcolor=color)
             for edge in edges:
                 label = str(edge.weight) if self.weighted else None
-                self.dot.edge(node, edge.node, label)
+                color = str(edge.color) if edge.color else None
+                self.dot.edge(node.name, edge.name, label, fillcolor=color)
 
     # ----------------------------------------------------------------
     # Exercise methods
@@ -247,6 +257,9 @@ class Graph:
         # expecting first node is a root
         if not self.colorize_find(colors, coloring, self.get_nodes()[0]):
             return result
+
+        for node in self.adjazenz.keys():
+            node.color = coloring[node]
 
         result = len(set(list(coloring.values()))), list(coloring.values())
         return result

@@ -18,9 +18,9 @@ class DiGraph(Graph):
             directory="graphs",
             filename=self.filename,
             strict=not self.allow_multi,
-            graph_attr={},
-            node_attr={},
-            edge_attr={}
+            graph_attr=self.graph_attr,
+            node_attr=self.node_attr,
+            edge_attr=self.edge_attr
         )
         self._buildDot()
         return self.dot
@@ -47,10 +47,10 @@ class DiGraph(Graph):
             to_so.append(current_node)
             for successor in self.get_neighbours_plus(current_node):
                 visit_seq.append(successor)
-                ein_grade[successor.node] -= 1
-                if ein_grade[successor.node] <= 0:
-                    ohne_vorgaenger.append(successor.node)
-                    ein_grade.pop(successor.node)
+                ein_grade[successor.name] -= 1
+                if ein_grade[successor.name] <= 0:
+                    ohne_vorgaenger.append(successor.name)
+                    ein_grade.pop(successor.name)
 
         return to_so, visit_seq
 
@@ -93,7 +93,7 @@ class DiGraph(Graph):
         deck = []
 
         for node in self.get_nodes():
-            if node.node not in ds_nr:
+            if node.name not in ds_nr:
                 count = self.szhk_search(ds_nr, min_nr, count, deck, node)
 
         from classes import returnObject
@@ -101,18 +101,18 @@ class DiGraph(Graph):
 
     def szhk_search(self, ds_nr, min_nr, count, deck, node):
         count += 1
-        ds_nr[node.node] = count
-        min_nr[node.node] = count
+        ds_nr[node.name] = count
+        min_nr[node.name] = count
         deck.append(node)
 
         for successor in self.get_neighbours_plus(node):
-            if successor.node not in ds_nr:
+            if successor.name not in ds_nr:
                 count = self.szhk_search(ds_nr, min_nr, count, deck, successor)
-                min_nr[node.node] = min(min_nr.get(node.node), min_nr.get(successor.node))
+                min_nr[node.name] = min(min_nr.get(node.name), min_nr.get(successor.name))
             elif successor in deck:
-                min_nr[node.node] = min(min_nr.get(node.node), min_nr.get(successor.node))
+                min_nr[node.name] = min(min_nr.get(node.name), min_nr.get(successor.name))
 
-        if ds_nr.get(node.node) == min_nr.get(node.node):
+        if ds_nr.get(node.name) == min_nr.get(node.name):
             szhk = []
             while True:
                 cur_node = deck.pop()
