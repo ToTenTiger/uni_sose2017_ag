@@ -61,20 +61,19 @@ inputs = ["0:1,2;1:0,3;2:0,3,4;3:1,2,5;4:2,5;5:3,4;;",
           "49:0,6,8,10,11,16,17,21,22,23,24,25,29,30,31,32,34,38,39,40,41,42,43,45,46;;"]
 
 results = []
-for i, adjazenzlist in enumerate(inputs, start=1):
+# TODO set inputs[:3] to inputs to include last graph after performance improvement
+for i, adjazenzlist in enumerate(inputs[:3], start=1):
     graph = Graph(title="Exercise 07 Task 26 Graph 0{}".format(i),
                   filename="e07_t26_g0{}".format(i),
                   value=adjazenzlist)
-    print("Colorize graph 0{} >>> Start <<<".format(i))
-    r = graph.colorize()
-    print("Colorize graph 0{} >>> End <<<".format(i))
+    r = graph.colorize(10)
     results.append(r)
     create_print_render_dot(graph)
 
-for i, r in enumerate(results, start=1):
-    print("\n__Graph_0{}___________: {}".format(i, "<not implemented yet>"))
-    print(" - chromatische Zahl : {}".format("<not implemented yet>"))
-    print(" - {}-Färbung\t: {}".format("<-1>", "<not implemented yet>"))
+for i, (c, c_list) in enumerate(results, start=1):
+    # print("\n__Graph_0{}___________: {}".format(i, "<not implemented yet>"))
+    # print(" - chromatische Zahl : {}".format("<not implemented yet>"))
+    print("{}-Färbung\t: {}".format(c, c_list))
 
 print_output_info(e="07", t="26")
 

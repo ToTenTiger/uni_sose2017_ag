@@ -109,17 +109,17 @@ class Graph:
 
     def get_neighbours_plus(self, node):
         return list(map(
-            lambda e: Edge(e),
+            lambda e: deepcopy(e),
             self.adjazenz.get(str(node)) or []
-        )) or []
+        ))
 
     def get_neighbours_minus(self, node):
-        neighbours = []
+        predecessors = []
         for n, es in self.adjazenz.items():
             for e in es:
                 if e == str(node):
-                    neighbours.append(Edge(n, e.weight))
-        return neighbours
+                    predecessors.append(Edge(n, e.weight))
+        return predecessors
 
     def get_neighbours(self, node):
         return self.get_neighbours_plus(node) + self.get_neighbours_minus(node)
@@ -235,8 +235,62 @@ class Graph:
                 euler.insert(euler.index(u) + 1 + i, sub_node)
         return euler
 
-    def colorize(self):
-        return None
+    def colorize(self, c_max):
+        result = "</>", "</>"
+
+        coloring = dict()
+        for n in self.get_nodes():
+            coloring[n] = 0
+
+        colors = list(range(1, c_max+1))
+
+        # expecting first node is a root
+        if not self.colorize_find(colors, coloring, self.get_nodes()[0]):
+            return result
+
+        result = len(set(list(coloring.values()))), list(coloring.values())
+        return result
+
+    def colorize_find(self, colors, coloring, current_node):
+        neighbours = list(set(self.get_neighbours(current_node)))
+
+        # find available colors
+        unused_colors = colors[:]
+        for neighbour in neighbours:
+            if coloring[neighbour] in unused_colors:
+                unused_colors.remove(coloring[neighbour])
+
+        while unused_colors:
+
+            # use smallest available color (because maybe not all colors needed)
+            coloring[current_node] = min(unused_colors)
+
+            # all nodes have a color
+            if not 0 in list(coloring.values()):
+                return True
+
+            uncolored_neighbours = []
+            for neighbour in neighbours:
+                if coloring[neighbour] == 0:
+                    uncolored_neighbours.append(neighbour)
+
+            if uncolored_neighbours:
+                # depth-first coloring
+                for neighbour in uncolored_neighbours:
+                    result = self.colorize_find(colors, coloring, neighbour)
+                    if result:
+                        return True
+                    elif result is None:
+                        pass  # all neighbours already colored
+                    elif not result:
+                        coloring[current_node] = 0
+                        unused_colors.remove(min(unused_colors))
+                        break
+            else:
+                return None
+
+        # all colors were used by neighbours or as unsuccessful solution
+        return False
 
     # ----------------------------------------------------------------
     # maybe not needed - after call a toGraph call is needed
