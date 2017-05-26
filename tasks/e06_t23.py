@@ -23,7 +23,8 @@ results = []
 for i, adjazenzlist in enumerate(inputs, start=1):
     graph = DiGraph(title="Exercise 06 Task 23 Graph 0{}".format(i),
                     filename="e06_t23_g0{}".format(i),
-                    value=adjazenzlist)
+                    value=adjazenzlist,
+                    allow_multi=True)
     print("Processing graph 0{} >>> Start <<<".format(i))
     r = graph.trans_conclusion_reduction()
     print("Processing graph 0{} >>> End <<<".format(i))
@@ -32,11 +33,13 @@ for i, adjazenzlist in enumerate(inputs, start=1):
     if r.conclusion_edges > 0 and r.reduction_edges > 0:
         graph_plus = DiGraph(title="Exercise 06 Task 23 Graph 0{} (trans. conclusion))".format(i),
                              filename="e06_t23_g0{}_conc".format(i),
-                             value=r.conclusion.to_string())
+                             value=r.conclusion.to_string(),
+                             allow_multi=True)
         create_print_render_dot(graph_plus)
         graph_minus = DiGraph(title="Exercise 06 Task 23 Graph 0{} (trans. reduction)".format(i),
                               filename="e06_t23_g0{}_redu".format(i),
-                              value=str(r.reduction))
+                              value=str(r.reduction),
+                              allow_multi=True)
         create_print_render_dot(graph_minus)
 
 for i, r in enumerate(results, start=1):
